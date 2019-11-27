@@ -2,6 +2,9 @@
 name: 'Install swift tool'
 description: 'Clone and build a swift tool'
 author: 'Benedek Kozma'
+branding:
+  color: 'green'
+  icon: 'download'
 inputs:
   url:
     description: 'Git URL of the tool to build'
@@ -12,4 +15,3 @@ inputs:
 runs:
   using: 'node12'
   main: 'lib/main.js'
-  
