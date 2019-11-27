@@ -1,13 +1,14 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as os from 'os'
-import * as uuid from "uuid/v1";
+import * as uuid from 'uuid/v4';
 
 const url: string = core.getInput('url');
 const branch: string = core.getInput('branch');
 
 const homeDirectory = os.homedir();
-const workingDirectory = `${homeDirectory}/action-install-swift-tool-${uuid()}`;
+const id: string = uuid();
+const workingDirectory = `${homeDirectory}/install-swift-tool-${id}`;
 const productDirectory = `${workingDirectory}/.build/release`;
 
 async function create_working_directory(): Promise<void> {
