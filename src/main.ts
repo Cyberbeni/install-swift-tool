@@ -33,11 +33,17 @@ async function build_tool(): Promise<void> {
   })
 }
 
+async function export_path(): Promise<void> {
+  await core.group('Export path...', async () => {
+    core.addPath(productDirectory);
+  })
+}
+
 async function main(): Promise<void> {
   await create_working_directory();
   await clone_git();
   await build_tool();
-  core.addPath(productDirectory);
+  await export_path();
 }
 
 main().catch(error => { core.setFailed(error.message); })
