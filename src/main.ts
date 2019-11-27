@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as os from 'os'
-import * as uuid from "uuid";
+import * as uuid from "uuid/v1";
 
 const url: string = core.getInput('url');
 const branch: string = core.getInput('branch');
