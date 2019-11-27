@@ -29,8 +29,7 @@ async function clone_git(): Promise<void> {
 
 async function build_tool(): Promise<void> {
   await core.group('Build tool...', async () => {
-    await exec.exec('cd', [workingDirectory])
-    await exec.exec('swift', ['build', '--configuration', 'release', '--disable-sandbox']);
+    await exec.exec('swift', ['build', '--package-path', workingDirectory, '--configuration', 'release', '--disable-sandbox']);
   })
 }
 
