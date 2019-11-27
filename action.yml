@@ -1,10 +1,15 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+  
+name: 'Install swift tool'
+description: 'Clone and build a swift tool'
+author: 'Benedek Kozma'
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  url:
+    description: 'Git URL of the tool to build'
+    required: true
+  branch:
+    description: 'Git branch/tag to clone'
+    required: false
 runs:
   using: 'node12'
   main: 'lib/main.js'
+  
