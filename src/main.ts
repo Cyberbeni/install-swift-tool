@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as os from 'os'
-import * as uuid from "uuid/v1";
+import * as uuid from "uuid";
 
 const url: string = core.getInput('url');
 const branch: string = core.getInput('branch');
@@ -11,13 +11,13 @@ const workingDirectory = `${homeDirectory}/action-install-swift-tool-${uuid()}`;
 const productDirectory = `${workingDirectory}/.build/release`;
 
 async function create_working_directory(): Promise<void> {
-  await group('Create working directory...', async () => {
+  await core.group('Create working directory...', async () => {
     await exec.exec('mkdir', ['-p', workingDirectory]);
   })
 }
 
 async function clone_git(): Promise<void> {
-  await group('Clone repo...', async () => {
+  await core.group('Clone repo...', async () => {
     if (branch) {
       await exec.exec('git', ['clone', '--depth', '1', '--branch', branch, url, workingDirectory]);
     } else {
@@ -27,7 +27,7 @@ async function clone_git(): Promise<void> {
 }
 
 async function build_tool(): Promise<void> {
-  await group('Build tool...', async () => {
+  await core.group('Build tool...', async () => {
     await exec.exec('cd', [workingDirectory])
     await exec.exec('swift', ['build', '--configuration', 'release', '--disable-sandbox']);
   })
