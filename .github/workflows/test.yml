@@ -4,10 +4,15 @@ on: [push, pull_request]
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v1
     - name: Install Swift
+      if: runner.os == 'Linux'
       uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1.2' # Install latest Swift release
