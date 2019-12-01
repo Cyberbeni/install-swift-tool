@@ -11,7 +11,6 @@ Run after every change
 ```bash
 $ npm install
 $ npm run build
-$ npm test
 $ npm prune --production
 ```
 
