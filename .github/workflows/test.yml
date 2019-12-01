@@ -1,10 +1,13 @@
 name: "Test action"
 
 on: [push, pull_request]
+strategy:
+  matrix:
+    os: [ubuntu-latest, macos-latest]
 
 jobs:
   test:
-    runs-on: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout
       uses: actions/checkout@v1
