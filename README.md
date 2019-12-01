@@ -1,3 +1,11 @@
+## Versioning/Releases
+
+`master` should always work, changes to functionality should be released after merge, changes to tests/readme won't.
+
+`v1` branch will always point to the latest `v1.x.x` tag (on master branch).
+
+If API is changed in a non-backward compatible way, version will get bumped to 2.0.0 and a `v2` branch will start following the new versions. Only security fixes get merged back to earlier major version.
+
 ## How to contribute
 
 Install once on macOS (Homebrew required)
