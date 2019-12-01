@@ -1,17 +1,18 @@
 ## How to contribute
 
-Install once
+Install once on macOS (Homebrew required)
 ```bash
-$ brew install npm
-$ brew install yarn
-$ yarn
+$ make once-mac
 ```
 
-Run after every change  
+Run before commit 
 ```bash
-$ npm install
-$ npm run build
-$ npm prune --production
+make build
+```
+
+Run tests in `./__test__/` (for testing parts of the logic, the real tests are run on GitHub after push/pull request)
+```bash
+make test-local
 ```
 
 ## Usage:
