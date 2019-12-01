@@ -28,7 +28,7 @@ make test-local
 Step example:
 ```yaml
 - name: Install xcbeautify
-  uses: Cyberbeni/install-swift-tool@master
+  uses: Cyberbeni/install-swift-tool@v1
   with:
     url: https://github.com/Cyberbeni/xcbeautify
     branch: linux-fixes # optional
@@ -45,7 +45,7 @@ jobs:
     - name: Install Swift
       uses: YOCKOW/Action-setup-swift@master
     - name: Install xcbeautify
-      uses: Cyberbeni/install-swift-tool@master
+      uses: Cyberbeni/install-swift-tool@v1
       with:
         url: https://github.com/Cyberbeni/xcbeautify
         branch: linux-fixes
