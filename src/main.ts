@@ -24,7 +24,7 @@ async function clone_git(): Promise<void> {
     } else {
       await exec.exec('git', ['clone', '--depth', '1', url, workingDirectory]);
     }
-    await exec.exec('git', ['rev-parse', 'HEAD']);
+    await exec.exec('git', ['-C', workingDirectory,'rev-parse', 'HEAD']);
   })
 }
 

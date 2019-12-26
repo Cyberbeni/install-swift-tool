@@ -15,7 +15,7 @@ jobs:
       if: runner.os == 'Linux'
       uses: YOCKOW/Action-setup-swift@master
       with:
-        swift-version: '5.1.2' # Install latest Swift release
+        swift-version: '5.1.3' # Install latest Swift release
     - name: Run action without branch
       uses: ./
       with:
