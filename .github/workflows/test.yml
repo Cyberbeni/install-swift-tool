@@ -8,14 +8,11 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
+    container:
+      image: swift:latest
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: Install Swift
-      if: runner.os == 'Linux'
-      uses: YOCKOW/Action-setup-swift@master
-      with:
-        swift-version: '5.1.2' # Install latest Swift release
     - name: Run action without branch
       uses: ./
       with:
