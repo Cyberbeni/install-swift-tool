@@ -1,23 +1,14 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
-  "private": true,
-  "description": "TypeScript template action",
+  "name": "install-swift-tool",
+  "version": "1.0.2",
+  "description": "Github action to install swift based tools",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
     "test": "jest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
-  },
-  "keywords": [
-    "actions",
-    "node",
-    "setup"
-  ],
-  "author": "YourNameOrOrganization",
+  "keywords": [],
+  "author": "Cyberbeni",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0",
