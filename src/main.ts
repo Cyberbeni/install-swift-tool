@@ -1,3 +1,4 @@
+import * as cache from '@actions/cache';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as os from 'os'
