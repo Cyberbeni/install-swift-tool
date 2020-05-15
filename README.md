@@ -2,9 +2,9 @@
 
 `master` should always work, changes to functionality should be released after merge, changes to tests/readme won't.
 
-`v1` branch will always point to the latest `v1.x.x` tag (on master branch).
+`v1` branch will always point to the latest `v1.x.x` tag.
 
-If API is changed in a non-backward compatible way, version will get bumped to 2.0.0 and a `v2` branch will start following the new versions. Only security fixes get merged back to earlier major version.
+`v2` enables caching by default.
 
 ## How to contribute
 
@@ -28,7 +28,7 @@ make test-local
 Step example:
 ```yaml
 - name: Install xcbeautify
-  uses: Cyberbeni/install-swift-tool@v1
+  uses: Cyberbeni/install-swift-tool@v2
   with:
     url: https://github.com/Cyberbeni/xcbeautify
     branch: linux-fixes # optional
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Install Swift
       uses: YOCKOW/Action-setup-swift@master
     - name: Install xcbeautify

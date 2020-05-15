@@ -77,9 +77,13 @@ async function build_tool(): Promise<void> {
   })
 }
 
-async function save_to_cache(): Promise<void> {
-  await core.group('Save to cache...', async () => {
-    await cache.saveCache([cacheDirectory, productDirectory], cacheKey)
+async function try_to_cache(): Promise<void> {
+  await core.group('Trying to save to cache...', async () => {
+    try {
+      await cache.saveCache([cacheDirectory, productDirectory], cacheKey)
+    } catch (error) {
+      core.info(error.message)
+    }
   })
 }
 
@@ -98,7 +102,7 @@ async function main(): Promise<void> {
     await clone_git()
     await build_tool()
     if (useCache) {
-      await save_to_cache()
+      await try_to_cache()
     }
   }
   await export_path()
