@@ -1,9 +1,9 @@
 import * as cache from '@actions/cache';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
-import * as cache from '@actions/cache';
 import * as os from 'os'
-import uuidv4 from 'uuid/v4';
+import uuidv5 from 'uuid/v5';
+import { isUndefined } from 'util';
 
 const url: string = core.getInput('url');
 const branch: string = core.getInput('branch');
@@ -11,9 +11,6 @@ const saveToCache: boolean = core.getInput('save-to-cache') == 'true';
 const restoreFromCache: boolean = core.getInput('restore-from-cache') == 'true';
 
 const homeDirectory = os.homedir();
-const uuid: string = uuidv4();
-const workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`;
-const productDirectory = `${workingDirectory}/.build/release`;
 
 /** vvv HELPERS vvv */
 
@@ -29,22 +26,32 @@ async function better_exec(commandLine: string, args?: string[]): Promise<string
 
 /** ^^^ HELPERS ^^^ */
 
+let uuid: string = '';
+let swiftVersion = '';
+let workingDirectory = '';
+let productDirectory = '';
+let commitHash: string = '';
 async function create_working_directory(): Promise<void> {
   await core.group('Create working directory...', async () => {
-    await exec.exec('mkdir', ['-p', workingDirectory]);
-  })
-}
-
-let didRestore: boolean = false;
-let commitHash: string = '';
-async function try_to_restore(): Promise<void> {
-  await core.group('Try to restore from cache...', async () => {
     if (branch) {
       commitHash = await better_exec('git', ['ls-remote', '-ht', url, `refs/heads/${branch}`, `refs/tags/${branch}`]);
     } else {
       commitHash = await better_exec('git', ['ls-remote', url, `HEAD`]);
     }
     commitHash = commitHash.substring(0,39);
+    uuid = uuidv5(`${url}-${commitHash}-${swiftVersion}`, 'installswifttool');
+    workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`;
+    productDirectory = `${workingDirectory}/.build/release`;
+    swiftVersion = await better_exec('swift', ['-version']);
+
+    await exec.exec('mkdir', ['-p', workingDirectory]);
+  })
+}
+
+let didRestore: boolean = false;
+async function try_to_restore(): Promise<void> {
+  await core.group('Try to restore from cache...', async () => {
+    didRestore = !isUndefined(await cache.restoreCache([productDirectory], `installswifttool-${uuid}`))
   })
 }
 
@@ -65,6 +72,12 @@ async function build_tool(): Promise<void> {
   })
 }
 
+async function save_to_cache(): Promise<void> {
+  await core.group('Save to cache...', async () => {
+    await cache.saveCache([productDirectory], `installswifttool-${uuid}`)
+  })
+}
+
 async function export_path(): Promise<void> {
   await core.group('Export path...', async () => {
     core.addPath(productDirectory);
@@ -74,11 +87,14 @@ async function export_path(): Promise<void> {
 async function main(): Promise<void> {
   await create_working_directory();
   if (restoreFromCache) {
-    try_to_restore()
+    await try_to_restore()
   }
   if (!didRestore) {
     await clone_git();
     await build_tool();
+  }
+  if (saveToCache) {
+    await save_to_cache()
   }
   await export_path();
 }
