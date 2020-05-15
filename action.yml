@@ -12,6 +12,13 @@ inputs:
   branch:
     description: 'Git branch/tag to clone'
     required: false
+  use-cache:
+    description: 'Use cache to restore/save build product'
+    required: false
+    default: 'true'
+outputs:
+  cache-hit:
+    description: 'A boolean value to indicate if restoring from cache was successful'
 runs:
   using: 'node12'
   main: 'lib/main.js'
