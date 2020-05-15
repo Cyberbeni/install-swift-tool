@@ -39,7 +39,7 @@ async function create_working_directory(): Promise<void> {
       commitHash = await better_exec('git', ['ls-remote', url, `HEAD`]);
     }
     commitHash = commitHash.substring(0,39);
-    uuid = uuidv5(`${url}-${commitHash}-${swiftVersion}`, 'installswifttool');
+    uuid = uuidv5(`${url}-${commitHash}-${swiftVersion}`, '6050636b-7499-41d4-b9c6-756aff9856d0');
     workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`;
     productDirectory = `${workingDirectory}/.build/release`;
     swiftVersion = await better_exec('swift', ['-version']);
