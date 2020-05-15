@@ -44,7 +44,7 @@ async function create_working_directory(): Promise<void> {
     workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`;
     productDirectory = `${workingDirectory}/.build/release`;
 
-    await exec.exec('mkdir', ['-p', workingDirectory]);
+    await exec.exec('mkdir', ['-p', productDirectory]);
   })
 }
 
