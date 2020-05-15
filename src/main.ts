@@ -29,6 +29,7 @@ let uuid: string = ''
 let swiftVersion = ''
 let workingDirectory = ''
 let productDirectory = ''
+let cacheDirectory = ''
 let commitHash: string = ''
 async function create_working_directory(): Promise<void> {
   await core.group('Create working directory...', async () => {
@@ -41,8 +42,9 @@ async function create_working_directory(): Promise<void> {
     swiftVersion = await better_exec('swift', ['-version'])
 
     uuid = uuidv5(`${url}-${commitHash}-${swiftVersion}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
-    workingDirectory = `install-swift-tool-${uuid}`
+    workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`
     productDirectory = `${workingDirectory}/.build/release`
+    cacheDirectory = `${workingDirectory}/.build/*/release`
 
     await exec.exec('mkdir', ['-p', workingDirectory])
   })
@@ -53,7 +55,7 @@ let didRestore: boolean = false
 async function try_to_restore(): Promise<void> {
   await core.group('Try to restore from cache...', async () => {
     cacheKey = `installswifttool-${uuid}`
-    didRestore = !isUndefined(await cache.restoreCache([productDirectory], cacheKey))
+    didRestore = !isUndefined(await cache.restoreCache([cacheDirectory, productDirectory], cacheKey))
     core.setOutput('cache-hit', `${didRestore}`)
   })
 }
@@ -77,7 +79,7 @@ async function build_tool(): Promise<void> {
 
 async function save_to_cache(): Promise<void> {
   await core.group('Save to cache...', async () => {
-    await cache.saveCache([productDirectory], cacheKey)
+    await cache.saveCache([cacheDirectory, productDirectory], cacheKey)
   })
 }
 
