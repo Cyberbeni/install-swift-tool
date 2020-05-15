@@ -7,8 +7,7 @@ import { isUndefined } from 'util';
 
 const url: string = core.getInput('url');
 const branch: string = core.getInput('branch');
-const saveToCache: boolean = core.getInput('save-to-cache') == 'true';
-const restoreFromCache: boolean = core.getInput('restore-from-cache') == 'true';
+const useCache: boolean = core.getInput('use-cache') == 'true';
 
 const homeDirectory = os.homedir();
 
@@ -39,10 +38,11 @@ async function create_working_directory(): Promise<void> {
       commitHash = await better_exec('git', ['ls-remote', url, `HEAD`]);
     }
     commitHash = commitHash.substring(0,39);
+    swiftVersion = await better_exec('swift', ['-version']);
+
     uuid = uuidv5(`${url}-${commitHash}-${swiftVersion}`, '6050636b-7499-41d4-b9c6-756aff9856d0');
     workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`;
     productDirectory = `${workingDirectory}/.build/release`;
-    swiftVersion = await better_exec('swift', ['-version']);
 
     await exec.exec('mkdir', ['-p', workingDirectory]);
   })
@@ -52,6 +52,7 @@ let didRestore: boolean = false;
 async function try_to_restore(): Promise<void> {
   await core.group('Try to restore from cache...', async () => {
     didRestore = !isUndefined(await cache.restoreCache([productDirectory], `installswifttool-${uuid}`))
+    core.setOutput('cache-hit', `${didRestore}`)
   })
 }
 
@@ -86,15 +87,15 @@ async function export_path(): Promise<void> {
 
 async function main(): Promise<void> {
   await create_working_directory();
-  if (restoreFromCache) {
+  if (useCache) {
     await try_to_restore()
   }
   if (!didRestore) {
     await clone_git();
     await build_tool();
-  }
-  if (saveToCache) {
-    await save_to_cache()
+    if (useCache) {
+      await save_to_cache()
+    }
   }
   await export_path();
 }

@@ -12,12 +12,8 @@ inputs:
   branch:
     description: 'Git branch/tag to clone'
     required: false
-  save-to-cache:
-    description: 'Cache build product'
-    required: false
-    default: 'true'
-  restore-from-cache:
-    description: 'Try to restore from cache if same commit hash'
+  use-cache:
+    description: 'Use cache to restore/save build product'
     required: false
     default: 'true'
 outputs:
