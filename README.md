@@ -45,7 +45,7 @@ jobs:
     - name: Install Swift
       uses: YOCKOW/Action-setup-swift@master
     - name: Install xcbeautify
-      uses: Cyberbeni/install-swift-tool@v1
+      uses: Cyberbeni/install-swift-tool@v2
       with:
         url: https://github.com/Cyberbeni/xcbeautify
         branch: linux-fixes
