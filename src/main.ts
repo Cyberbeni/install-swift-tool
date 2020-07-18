@@ -2,7 +2,7 @@ import * as cache from '@actions/cache'
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as os from 'os'
-import uuidv5 from 'uuid/v5'
+import { v5 as uuidv5 } from 'uuid'
 import { isUndefined } from 'util'
 
 const url: string = core.getInput('url')

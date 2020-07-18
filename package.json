@@ -3,6 +3,10 @@
   "version": "2.0.1",
   "description": "Github action to install swift based tools",
   "main": "lib/main.js",
+  "repository": {
+    "type" : "git",
+    "url" : "github:Cyberbeni/install-swift-tool.git"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest"
@@ -15,7 +19,7 @@
     "@actions/core": "^1.2.4",
     "@actions/exec": "^1.0.4",
     "os": "^0.1.1",
-    "uuid": "^3.3.3"
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.4",
