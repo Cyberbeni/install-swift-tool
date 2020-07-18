@@ -4,8 +4,8 @@
   "description": "Github action to install swift based tools",
   "main": "lib/main.js",
   "repository": {
-    "type" : "git",
-    "url" : "github:Cyberbeni/install-swift-tool.git"
+    "type": "git",
+    "url": "github:Cyberbeni/install-swift-tool.git"
   },
   "scripts": {
     "build": "tsc",
