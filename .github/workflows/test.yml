@@ -16,6 +16,8 @@ jobs:
       uses: YOCKOW/Action-setup-swift@master
       with:
         swift-version: '5.1.3' # Install latest Swift release
+    - name: Build
+      run: make build
     - name: Run action without branch
       uses: ./
       with:
