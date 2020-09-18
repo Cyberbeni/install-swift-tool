@@ -1,6 +1,6 @@
 {
   "name": "install-swift-tool",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Github action to install swift based tools",
   "main": "lib/main.js",
   "repository": {
@@ -9,24 +9,26 @@
   },
   "scripts": {
     "build": "tsc",
+    "package": "ncc build -o dist ./lib/main.js",
     "test": "jest"
   },
   "keywords": [],
   "author": "Cyberbeni",
   "license": "MIT",
   "dependencies": {
-    "@actions/cache": "^0.2.0",
-    "@actions/core": "^1.2.4",
+    "@actions/cache": "^1.0.2",
+    "@actions/core": "^1.2.5",
     "@actions/exec": "^1.0.4",
     "os": "^0.1.1",
-    "uuid": "^8.2.0"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.4",
-    "@types/node": "^14.0.23",
-    "@types/uuid": "^8.0.0",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.1",
+    "@types/uuid": "^8.3.0",
+    "@vercel/ncc": "^0.24.1",
     "jest": "^24.8.0",
-    "jest-circus": "^26.1.0",
+    "jest-circus": "^26.4.2",
     "ts-jest": "^24.0.2",
     "typescript": "^3.9.7"
   }
