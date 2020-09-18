@@ -40,7 +40,7 @@ const cache = __importStar(__webpack_require__(7799));
 const core = __importStar(__webpack_require__(2186));
 const exec = __importStar(__webpack_require__(1514));
 const os = __importStar(__webpack_require__(2087));
-const uuid_1 = __webpack_require__(407);
+const uuid_1 = __webpack_require__(4552);
 const util_1 = __webpack_require__(1669);
 const url = core.getInput('url');
 const branch = core.getInput('branch');
@@ -4938,7 +4938,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var uuid = __webpack_require__(407);
+var uuid = __webpack_require__(4552);
 var tslib = __webpack_require__(2107);
 var tough = __webpack_require__(8165);
 var http = __webpack_require__(8605);
@@ -49290,7 +49290,7 @@ exports.fromPromise = function (fn) {
 
 /***/ }),
 
-/***/ 407:
+/***/ 4552:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -49302,7 +49302,12 @@ __webpack_require__.d(__webpack_exports__, {
   "v1": () => /* reexport */ esm_node_v1,
   "v3": () => /* reexport */ esm_node_v3,
   "v4": () => /* reexport */ esm_node_v4,
-  "v5": () => /* reexport */ esm_node_v5
+  "v5": () => /* reexport */ esm_node_v5,
+  "NIL": () => /* reexport */ nil,
+  "version": () => /* reexport */ esm_node_version,
+  "validate": () => /* reexport */ esm_node_validate,
+  "stringify": () => /* reexport */ esm_node_stringify,
+  "parse": () => /* reexport */ esm_node_parse
 });
 
 // EXTERNAL MODULE: external "crypto"
@@ -49315,25 +49320,46 @@ const rnds8 = new Uint8Array(16);
 function rng() {
   return external_crypto_default().randomFillSync(rnds8);
 }
-// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/bytesToUuid.js
+// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/regex.js
+/* harmony default export */ const regex = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i);
+// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/validate.js
+
+
+function validate(uuid) {
+  return typeof uuid === 'string' && regex.test(uuid);
+}
+
+/* harmony default export */ const esm_node_validate = (validate);
+// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/stringify.js
+
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
  */
+
 const byteToHex = [];
 
 for (let i = 0; i < 256; ++i) {
   byteToHex.push((i + 0x100).toString(16).substr(1));
 }
 
-function bytesToUuid(buf, offset_) {
-  const offset = offset_ || 0; // Note: Be careful editing this code!  It's been tuned for performance
+function stringify(arr, offset = 0) {
+  // Note: Be careful editing this code!  It's been tuned for performance
   // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+  const uuid = (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase(); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  // of the following:
+  // - One or more input array values don't map to a hex octet (leading to
+  // "undefined" in the uuid)
+  // - Invalid input values for the RFC `version` or `variant` fields
 
-  return (byteToHex[buf[offset + 0]] + byteToHex[buf[offset + 1]] + byteToHex[buf[offset + 2]] + byteToHex[buf[offset + 3]] + '-' + byteToHex[buf[offset + 4]] + byteToHex[buf[offset + 5]] + '-' + byteToHex[buf[offset + 6]] + byteToHex[buf[offset + 7]] + '-' + byteToHex[buf[offset + 8]] + byteToHex[buf[offset + 9]] + '-' + byteToHex[buf[offset + 10]] + byteToHex[buf[offset + 11]] + byteToHex[buf[offset + 12]] + byteToHex[buf[offset + 13]] + byteToHex[buf[offset + 14]] + byteToHex[buf[offset + 15]]).toLowerCase();
+  if (!esm_node_validate(uuid)) {
+    throw TypeError('Stringified UUID is invalid');
+  }
+
+  return uuid;
 }
 
-/* harmony default export */ const esm_node_bytesToUuid = (bytesToUuid);
+/* harmony default export */ const esm_node_stringify = (stringify);
 // CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/v1.js
 
  // **`v1()` - Generate time-based UUID**
@@ -49426,21 +49452,49 @@ function v1(options, buf, offset) {
     b[i + n] = node[n];
   }
 
-  return buf || esm_node_bytesToUuid(b);
+  return buf || esm_node_stringify(b);
 }
 
 /* harmony default export */ const esm_node_v1 = (v1);
+// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/parse.js
+
+
+function parse(uuid) {
+  if (!esm_node_validate(uuid)) {
+    throw TypeError('Invalid UUID');
+  }
+
+  let v;
+  const arr = new Uint8Array(16); // Parse ########-....-....-....-............
+
+  arr[0] = (v = parseInt(uuid.slice(0, 8), 16)) >>> 24;
+  arr[1] = v >>> 16 & 0xff;
+  arr[2] = v >>> 8 & 0xff;
+  arr[3] = v & 0xff; // Parse ........-####-....-....-............
+
+  arr[4] = (v = parseInt(uuid.slice(9, 13), 16)) >>> 8;
+  arr[5] = v & 0xff; // Parse ........-....-####-....-............
+
+  arr[6] = (v = parseInt(uuid.slice(14, 18), 16)) >>> 8;
+  arr[7] = v & 0xff; // Parse ........-....-....-####-............
+
+  arr[8] = (v = parseInt(uuid.slice(19, 23), 16)) >>> 8;
+  arr[9] = v & 0xff; // Parse ........-....-....-....-############
+  // (Use "/" to avoid 32-bit truncation when bit-shifting high-order bytes)
+
+  arr[10] = (v = parseInt(uuid.slice(24, 36), 16)) / 0x10000000000 & 0xff;
+  arr[11] = v / 0x100000000 & 0xff;
+  arr[12] = v >>> 24 & 0xff;
+  arr[13] = v >>> 16 & 0xff;
+  arr[14] = v >>> 8 & 0xff;
+  arr[15] = v & 0xff;
+  return arr;
+}
+
+/* harmony default export */ const esm_node_parse = (parse);
 // CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/v35.js
 
 
-function uuidToBytes(uuid) {
-  // Note: We assume we're being passed a valid uuid string
-  const bytes = [];
-  uuid.replace(/[a-fA-F0-9]{2}/g, function (hex) {
-    bytes.push(parseInt(hex, 16));
-  });
-  return bytes;
-}
 
 function stringToBytes(str) {
   str = unescape(encodeURIComponent(str)); // UTF8 escape
@@ -49463,19 +49517,20 @@ const URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
     }
 
     if (typeof namespace === 'string') {
-      namespace = uuidToBytes(namespace);
+      namespace = esm_node_parse(namespace);
     }
 
-    if (!Array.isArray(value)) {
-      throw TypeError('value must be an array of bytes');
-    }
-
-    if (!Array.isArray(namespace) || namespace.length !== 16) {
-      throw TypeError('namespace must be uuid string or an Array of 16 byte values');
-    } // Per 4.3
+    if (namespace.length !== 16) {
+      throw TypeError('Namespace must be array-like (16 iterable integer values, 0-255)');
+    } // Compute hash of namespace and value, Per 4.3
+    // Future: Use spread syntax when supported on all platforms, e.g. `bytes =
+    // hashfunc([...namespace, ... value])`
 
 
-    const bytes = hashfunc(namespace.concat(value));
+    let bytes = new Uint8Array(16 + value.length);
+    bytes.set(namespace);
+    bytes.set(value, namespace.length);
+    bytes = hashfunc(bytes);
     bytes[6] = bytes[6] & 0x0f | version;
     bytes[8] = bytes[8] & 0x3f | 0x80;
 
@@ -49489,7 +49544,7 @@ const URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
       return buf;
     }
 
-    return esm_node_bytesToUuid(bytes);
+    return esm_node_stringify(bytes);
   } // Function#name is not settable on some platforms (#270)
 
 
@@ -49542,7 +49597,7 @@ function v4(options, buf, offset) {
     return buf;
   }
 
-  return esm_node_bytesToUuid(rnds);
+  return esm_node_stringify(rnds);
 }
 
 /* harmony default export */ const esm_node_v4 = (v4);
@@ -49565,7 +49620,26 @@ function sha1(bytes) {
 
 const v5 = v35('v5', 0x50, esm_node_sha1);
 /* harmony default export */ const esm_node_v5 = (v5);
+// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/nil.js
+/* harmony default export */ const nil = ('00000000-0000-0000-0000-000000000000');
+// CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/version.js
+
+
+function version(uuid) {
+  if (!esm_node_validate(uuid)) {
+    throw TypeError('Invalid UUID');
+  }
+
+  return parseInt(uuid.substr(14, 1), 16);
+}
+
+/* harmony default export */ const esm_node_version = (version);
 // CONCATENATED MODULE: ./node_modules/uuid/dist/esm-node/index.js
+
+
+
+
+
 
 
 

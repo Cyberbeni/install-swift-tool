@@ -17,18 +17,18 @@
   "license": "MIT",
   "dependencies": {
     "@actions/cache": "^1.0.2",
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.2.5",
     "@actions/exec": "^1.0.4",
     "os": "^0.1.1",
-    "uuid": "^8.2.0"
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.4",
-    "@types/node": "^14.0.23",
-    "@types/uuid": "^8.0.0",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.1",
+    "@types/uuid": "^8.3.0",
     "@vercel/ncc": "^0.24.1",
     "jest": "^24.8.0",
-    "jest-circus": "^26.1.0",
+    "jest-circus": "^26.4.2",
     "ts-jest": "^24.0.2",
     "typescript": "^3.9.7"
   }
