@@ -2,7 +2,7 @@
 build:
 	npm install
 	npm run build
-	ncc build -o dist ./lib/main.js
+	npm run package
 
 .PHONY: test-local
 test-local:
@@ -15,4 +15,3 @@ once-mac:
 	brew reinstall npm
 	brew reinstall yarn
 	yarn
-	npm i -g @vercel/ncc
