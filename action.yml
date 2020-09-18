@@ -21,4 +21,4 @@ outputs:
     description: 'A boolean value to indicate if restoring from cache was successful'
 runs:
   using: 'node12'
-  main: 'lib/main.js'
+  main: 'dist/index.js'

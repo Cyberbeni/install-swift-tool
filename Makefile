@@ -2,7 +2,7 @@
 build:
 	npm install
 	npm run build
-	npm prune --production
+	ncc build -o dist ./lib/main.js
 
 .PHONY: test-local
 test-local:
@@ -12,6 +12,7 @@ test-local:
 
 .PHONY: once-mac
 once-mac:
-	brew install npm
-	brew install yarn
+	brew reinstall npm
+	brew reinstall yarn
 	yarn
+	npm i -g @vercel/ncc
