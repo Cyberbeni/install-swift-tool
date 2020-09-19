@@ -15,11 +15,11 @@ jobs:
       if: runner.os == 'Linux'
       uses: YOCKOW/Action-setup-swift@master
       with:
-        swift-version: '5.1.3' # Install latest Swift release
+        swift-version: '5.3' # Install latest Swift release
     - name: Build
       run: |
         make build
-        git status
+        [[ -z $(git status --porcelain) ]] || exit 1
     - name: Run action without branch
       uses: ./
       with:
