@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "package": "ncc build -o dist ./lib/main.js",
+    "package": "ncc build -m -o dist ./lib/main.js",
     "test": "jest"
   },
   "keywords": [],
