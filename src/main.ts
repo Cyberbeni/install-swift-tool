@@ -26,22 +26,21 @@ async function better_exec(commandLine: string, args?: string[]): Promise<string
 /** ^^^ HELPERS ^^^ */
 
 let uuid: string = ''
-let swiftVersion = ''
 let workingDirectory = ''
 let productDirectory = ''
 let cacheDirectory = ''
-let commitHash: string = ''
 async function create_working_directory(): Promise<void> {
   await core.group('Create working directory...', async () => {
+    let commitHash: string = ''
     if (branch) {
       commitHash = await better_exec('git', ['ls-remote', '-ht', url, `refs/heads/${branch}`, `refs/tags/${branch}`])
     } else {
       commitHash = await better_exec('git', ['ls-remote', url, `HEAD`])
     }
     commitHash = commitHash.substring(0,39)
-    swiftVersion = await better_exec('swift', ['-version'])
+    const swiftVersion = await better_exec('swift', ['-version'])
 
-    uuid = uuidv5(`${url}-${commitHash}-${swiftVersion}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
+    uuid = uuidv5(`${url}-${commitHash}-${os.version}-${swiftVersion}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
     workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`
     productDirectory = `${workingDirectory}/.build/release`
     cacheDirectory = `${workingDirectory}/.build/*/release`
@@ -55,7 +54,7 @@ let didRestore: boolean = false
 async function try_to_restore(): Promise<void> {
   await core.group('Try to restore from cache...', async () => {
     cacheKey = `installswifttool-${uuid}`
-    didRestore = !isUndefined(await cache.restoreCache([cacheDirectory, productDirectory], cacheKey))
+    didRestore = await cache.restoreCache([cacheDirectory, productDirectory], cacheKey) !== undefined
     core.setOutput('cache-hit', `${didRestore}`)
   })
 }
