@@ -13,5 +13,3 @@ test-local:
 .PHONY: once-mac
 once-mac:
 	brew reinstall npm
-	brew reinstall yarn
-	yarn
