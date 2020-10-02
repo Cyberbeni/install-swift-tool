@@ -32,6 +32,7 @@ Step example:
   with:
     url: https://github.com/Cyberbeni/xcbeautify
     branch: linux-fixes # optional
+    use-cache: true # optinal, default: true
 ```
 
 Full Linux example:
@@ -42,8 +43,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Install Swift
-      uses: YOCKOW/Action-setup-swift@master
     - name: Install xcbeautify
       uses: Cyberbeni/install-swift-tool@v2
       with:
