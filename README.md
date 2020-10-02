@@ -2,7 +2,7 @@
 
 Github action to install swift based tools, like `xcbeautify` or `swiftformat`, to be used inside workflows.
 
-## Versioning/Releases
+## Versions
 
 `master` - It should always work and contain the latest changes.
 
@@ -10,7 +10,7 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 
 `v2` - Adds caching (enabled by default), allows specifying `version`.
 
-## Usage:
+## Usage
 
 Step example:
 ```yaml
@@ -47,7 +47,7 @@ jobs:
 
 Install npm and yarn on macOS (Homebrew required)
 ```bash
-$ make once-mac
+make once-mac
 ```
 
 Run before commit
