@@ -2,7 +2,7 @@
 
 Github action to install swift based tools, like `xcbeautify` or `swiftformat`, to be used inside workflows.
 
-## Versioning/Releases
+## Versions
 
 `master` - It should always work and contain the latest changes.
 
@@ -46,7 +46,7 @@ jobs:
 
 Install npm and yarn on macOS (Homebrew required)
 ```bash
-$ make once-mac
+make once-mac
 ```
 
 Run before commit
