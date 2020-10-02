@@ -8,7 +8,7 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 
 `v1` - Initial version. Deprecated, use `v2` with `use-cache: false` instead.
 
-`v2` - Adds caching. (Enabled by default)
+`v2` - Adds caching (enabled by default), allows specifying `version`.
 
 ## Usage
 
@@ -19,6 +19,7 @@ Step example:
   with:
     url: https://github.com/Cyberbeni/xcbeautify
     branch: linux-fixes # optional
+    version: '*' # optional, overrides branch, format: https://devhints.io/semver
     use-cache: true # optinal, default: true
 ```
 

@@ -3,10 +3,11 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as os from 'os'
 import { v5 as uuidv5 } from 'uuid'
-import { isUndefined } from 'util'
+import * as semver from 'semver'
 
 const url: string = core.getInput('url')
-const branch: string = core.getInput('branch')
+let branch: string = core.getInput('branch')
+const version: string = core.getInput('version')
 const useCache: boolean = core.getInput('use-cache') == 'true'
 
 const homeDirectory = os.homedir()
@@ -17,7 +18,7 @@ async function better_exec(commandLine: string, args?: string[]): Promise<string
   let output: string = ''
   await exec.exec(commandLine, args, {
     listeners: {
-      stdout: (data: Buffer) => { output = data.toString().trim() }
+      stdout: (data: Buffer) => { output += data.toString().trim() }
     }
   })
   return output
@@ -25,12 +26,29 @@ async function better_exec(commandLine: string, args?: string[]): Promise<string
 
 /** ^^^ HELPERS ^^^ */
 
+async function resolve_version(): Promise<void> {
+  await core.group('Resolving version requirement', async () => {
+    let versions = (await better_exec('git', ['ls-remote', '--refs', '--tags', url]))
+      .split('\n')
+      .map(function(value, index, array) {
+        return value.split('/').pop() ?? ''
+      })
+    let targetVersion = semver.maxSatisfying(versions, version)
+    if (targetVersion) {
+      core.info(`Resolved version: ${targetVersion}`)
+      branch = targetVersion
+    } else {
+      throw Error(`No version satisfying '${version}' found.`)
+    }
+  })
+}
+
 let uuid: string = ''
 let workingDirectory = ''
 let productDirectory = ''
 let cacheDirectory = ''
 async function create_working_directory(): Promise<void> {
-  await core.group('Create working directory...', async () => {
+  await core.group('Creating working directory', async () => {
     let commitHash: string = ''
     if (branch) {
       commitHash = await better_exec('git', ['ls-remote', '-ht', url, `refs/heads/${branch}`, `refs/tags/${branch}`])
@@ -52,7 +70,7 @@ async function create_working_directory(): Promise<void> {
 let cacheKey: string = ''
 let didRestore: boolean = false
 async function try_to_restore(): Promise<void> {
-  await core.group('Try to restore from cache...', async () => {
+  await core.group('Trying to restore from cache', async () => {
     cacheKey = `installswifttool-${uuid}`
     didRestore = await cache.restoreCache([cacheDirectory, productDirectory], cacheKey) !== undefined
     core.setOutput('cache-hit', `${didRestore}`)
@@ -60,7 +78,7 @@ async function try_to_restore(): Promise<void> {
 }
 
 async function clone_git(): Promise<void> {
-  await core.group('Clone repo...', async () => {
+  await core.group('Cloning repo', async () => {
     if (branch) {
       await exec.exec('git', ['clone', '--depth', '1', '--branch', branch, url, workingDirectory])
     } else {
@@ -71,13 +89,13 @@ async function clone_git(): Promise<void> {
 }
 
 async function build_tool(): Promise<void> {
-  await core.group('Build tool...', async () => {
+  await core.group('Building tool', async () => {
     await exec.exec('swift', ['build', '--package-path', workingDirectory, '--configuration', 'release', '--disable-sandbox'])
   })
 }
 
 async function try_to_cache(): Promise<void> {
-  await core.group('Trying to save to cache...', async () => {
+  await core.group('Trying to save to cache', async () => {
     try {
       await cache.saveCache([cacheDirectory, productDirectory], cacheKey)
     } catch (error) {
@@ -87,12 +105,15 @@ async function try_to_cache(): Promise<void> {
 }
 
 async function export_path(): Promise<void> {
-  await core.group('Export path...', async () => {
+  await core.group('Exporting path', async () => {
     core.addPath(productDirectory)
   })
 }
 
 async function main(): Promise<void> {
+  if (version) {
+    await resolve_version()
+  }
   await create_working_directory()
   if (useCache) {
     await try_to_restore()

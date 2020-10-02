@@ -12,6 +12,9 @@ inputs:
   branch:
     description: 'Git branch/tag to clone'
     required: false
+  version:
+    description: 'Version range to choose max satisfying version by, overrides branch, format: https://devhints.io/semver'
+    required: false
   use-cache:
     description: 'Use cache to restore/save build product'
     required: false

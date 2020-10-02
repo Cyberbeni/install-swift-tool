@@ -11,11 +11,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Install Swift
-      if: runner.os == 'Linux'
-      uses: YOCKOW/Action-setup-swift@master
-      with:
-        swift-version: '5.3' # Install latest Swift release
     - name: Build
       run: |
         make build
@@ -29,7 +24,13 @@ jobs:
       with:
         url: https://github.com/Cyberbeni/xcbeautify
         branch: linux-fixes
+    - name: Run action with version
+      uses: ./
+      with:
+        url: https://github.com/realm/SwiftLint
+        version: '^0'
     - name: Test tools in path
       run: |
         which swiftformat
         which xcbeautify
+        which swiftlint
