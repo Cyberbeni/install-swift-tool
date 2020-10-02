@@ -3,10 +3,11 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as os from 'os'
 import { v5 as uuidv5 } from 'uuid'
-import { isUndefined } from 'util'
+import * as semver from 'semver'
 
 const url: string = core.getInput('url')
-const branch: string = core.getInput('branch')
+let branch: string = core.getInput('branch')
+const version: string = core.getInput('version')
 const useCache: boolean = core.getInput('use-cache') == 'true'
 
 const homeDirectory = os.homedir()
@@ -32,6 +33,19 @@ let cacheDirectory = ''
 async function create_working_directory(): Promise<void> {
   await core.group('Create working directory...', async () => {
     let commitHash: string = ''
+    if (version) {
+      let versions = (await better_exec('git', ['ls-remote', '--tags', url]))
+        .split('\n')
+        .map(function(value, index, array) {
+          return value.split('/').pop() ?? ''
+        })
+      let targetVersion = semver.maxSatisfying(versions, version)
+      if (targetVersion) {
+        branch = targetVersion
+      } else {
+        core.error(`No version satisfying '${version}' found.`)
+      }
+    }
     if (branch) {
       commitHash = await better_exec('git', ['ls-remote', '-ht', url, `refs/heads/${branch}`, `refs/tags/${branch}`])
     } else {
