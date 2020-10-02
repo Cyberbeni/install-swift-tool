@@ -2,35 +2,24 @@ import * as cache from '@actions/cache'
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as os from 'os'
-import { v5 as uuidv5 } from 'uuid'
 import * as semver from 'semver'
+import { v5 as uuidv5 } from 'uuid'
+import { better_exec } from './helpers'
+
+// Inputs
 
 const url: string = core.getInput('url')
 let branch: string = core.getInput('branch')
 const version: string = core.getInput('version')
 const useCache: boolean = core.getInput('use-cache') == 'true'
 
-const homeDirectory = os.homedir()
-
-/** vvv HELPERS vvv */
-
-async function better_exec(commandLine: string, args?: string[]): Promise<string> {
-  let output: string = ''
-  await exec.exec(commandLine, args, {
-    listeners: {
-      stdout: (data: Buffer) => { output += data.toString().trim() }
-    }
-  })
-  return output
-}
-
-/** ^^^ HELPERS ^^^ */
+// Steps
 
 async function resolve_version(): Promise<void> {
   await core.group('Resolving version requirement', async () => {
     let versions = (await better_exec('git', ['ls-remote', '--refs', '--tags', url]))
       .split('\n')
-      .map(function(value, index, array) {
+      .map(function(value) {
         return value.split('/').pop() ?? ''
       })
     let targetVersion = semver.maxSatisfying(versions, version)
@@ -43,6 +32,7 @@ async function resolve_version(): Promise<void> {
   })
 }
 
+const homeDirectory = os.homedir()
 let uuid: string = ''
 let workingDirectory = ''
 let productDirectory = ''
