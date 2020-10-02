@@ -2,7 +2,7 @@
 
 `master` - It should always work and contain the latest changes.
 
-`v1` - Initial version, deprecated.
+`v1` - Initial version. Deprecated, use `v2` with `use-cache: false` instead.
 
 `v2` - Adds caching. (Enabled by default)
 
