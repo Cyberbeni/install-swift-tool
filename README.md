@@ -12,12 +12,12 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 
 ## How to contribute
 
-Install once on macOS (Homebrew required)
+Install npm and yarn on macOS (Homebrew required)
 ```bash
 $ make once-mac
 ```
 
-Run before commit 
+Run before commit
 ```bash
 make build
 ```
