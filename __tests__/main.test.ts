@@ -3,7 +3,7 @@ import { better_exec } from '../src/helpers'
 
 test('Get versions', async() => {
     let versionsString = await better_exec('git', ['ls-remote', '--refs', '--tags', 'https://github.com/realm/SwiftLint'])
-    let versions = versionsString.split('\n').map(function(value, index, array) {
+    let versions = versionsString.split('\n').map(function(value) {
         return value.split('/').pop() ?? ''
     })
     let targetVersion = semver.maxSatisfying(versions, '^0')
