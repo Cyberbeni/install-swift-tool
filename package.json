@@ -1,6 +1,6 @@
 {
   "name": "install-swift-tool",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "Github action to install swift based tools",
   "main": "lib/main.js",
   "repository": {

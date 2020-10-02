@@ -19,6 +19,7 @@ Step example:
   with:
     url: https://github.com/Cyberbeni/xcbeautify
     branch: linux-fixes # optional
+    version: '*' # optional, overrides branch, format: https://devhints.io/semver
     use-cache: true # optinal, default: true
 ```
 

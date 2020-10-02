@@ -27,7 +27,7 @@ jobs:
     - name: Run action with version
       uses: ./
       with:
-        url: https://github.com/apple/swift-format
+        url: https://github.com/realm/SwiftLint
         version: '^0'
     - name: Test tools in path
       run: |

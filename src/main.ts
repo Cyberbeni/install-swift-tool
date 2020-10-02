@@ -35,6 +35,7 @@ async function resolve_version(): Promise<void> {
       })
     let targetVersion = semver.maxSatisfying(versions, version)
     if (targetVersion) {
+      core.info(`Resolved version: ${targetVersion}`)
       branch = targetVersion
     } else {
       throw Error(`No version satisfying '${version}' found.`)
