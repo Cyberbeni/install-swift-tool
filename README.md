@@ -1,3 +1,7 @@
+## Description
+
+Github action to install swift based tools, like `xcbeautify` or `swiftformat`, to be used inside workflows.
+
 ## Versioning/Releases
 
 `master` - It should always work and contain the latest changes.
