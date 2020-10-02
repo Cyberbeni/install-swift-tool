@@ -16,7 +16,7 @@ test('Get versions', async() => {
     let versions = versionsString.split('\n').map(function(value, index, array) {
         return value.split('/').pop() ?? ''
     })
-    let targetVersion = semver.maxSatisfying(versions, '^3.0.0')
+    let targetVersion = semver.maxSatisfying(versions, '^3.0')
     console.log(versions)
     console.log(targetVersion)
 });
