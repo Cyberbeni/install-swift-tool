@@ -1,19 +1,23 @@
+## Description
+
+Github action to install swift based tools, like `xcbeautify` or `swiftformat`, to be used inside workflows.
+
 ## Versioning/Releases
 
-`master` should always work, changes to functionality should be released after merge, changes to tests/readme won't.
+`master` - It should always work and contain the latest changes.
 
-`v1` branch will always point to the latest `v1.x.x` tag.
+`v1` - Initial version. Deprecated, use `v2` with `use-cache: false` instead.
 
-`v2` enables caching by default.
+`v2` - Adds caching. (Enabled by default)
 
 ## How to contribute
 
-Install once on macOS (Homebrew required)
+Install npm and yarn on macOS (Homebrew required)
 ```bash
 $ make once-mac
 ```
 
-Run before commit 
+Run before commit
 ```bash
 make build
 ```
@@ -32,31 +36,25 @@ Step example:
   with:
     url: https://github.com/Cyberbeni/xcbeautify
     branch: linux-fixes # optional
+    use-cache: true # optinal, default: true
 ```
 
-Full Linux example:
+Workflow example:
 ```yaml
+name: Lint
+
+on: pull_request
+
 jobs:
-  test-linux:
+  swiftformat-lint:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Install Swift
-      uses: YOCKOW/Action-setup-swift@master
-    - name: Install xcbeautify
+    - name: Install SwiftFormat
       uses: Cyberbeni/install-swift-tool@v2
       with:
-        url: https://github.com/Cyberbeni/xcbeautify
-        branch: linux-fixes
-    - name: Test
-      run: |
-        set -o pipefail
-        swift test --enable-code-coverage | xcbeautify
-    - name: Codecov
-      run: |
-        llvm-cov export -format="lcov" .build/debug/TypedNotificationCenterPackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > info.lcov
-        bash <(curl -s https://codecov.io/bash) -J 'TypedNotificationCenter' -n 'linux' -F 'linux'
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        url: https://github.com/nicklockwood/SwiftFormat
+    - name: Lint
+      run: swiftformat --lint .
 ```
