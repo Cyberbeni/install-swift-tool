@@ -1,10 +1,10 @@
 ## Versioning/Releases
 
-`master` should always work, changes to functionality should be released after merge, changes to tests/readme won't.
+`master` - It should always work and contain the latest changes.
 
-`v1` branch will always point to the latest `v1.x.x` tag.
+`v1` - Initial version, deprecated.
 
-`v2` enables caching by default.
+`v2` - Adds caching. (Enabled by default)
 
 ## How to contribute
 
