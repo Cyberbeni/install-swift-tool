@@ -37,7 +37,7 @@ async function resolve_version(): Promise<void> {
     if (targetVersion) {
       branch = targetVersion
     } else {
-      core.error(`No version satisfying '${version}' found.`)
+      throw Error(`No version satisfying '${version}' found.`)
     }
   })
 }
