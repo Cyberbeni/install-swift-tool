@@ -10,23 +10,6 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 
 `v2` - Adds caching. (Enabled by default)
 
-## How to contribute
-
-Install npm and yarn on macOS (Homebrew required)
-```bash
-$ make once-mac
-```
-
-Run before commit
-```bash
-make build
-```
-
-Run tests in `./__test__/` (for testing parts of the logic, the real tests are run on GitHub after push/pull request)
-```bash
-make test-local
-```
-
 ## Usage:
 
 Step example:
@@ -57,4 +40,21 @@ jobs:
         url: https://github.com/nicklockwood/SwiftFormat
     - name: Lint
       run: swiftformat --lint .
+```
+
+## How to contribute
+
+Install npm and yarn on macOS (Homebrew required)
+```bash
+$ make once-mac
+```
+
+Run before commit
+```bash
+make build
+```
+
+Run tests in `./__test__/` (for testing parts of the logic, the real tests are run on GitHub after push/pull request)
+```bash
+make test-local
 ```
