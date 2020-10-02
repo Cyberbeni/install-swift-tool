@@ -39,27 +39,22 @@ Step example:
     use-cache: true # optinal, default: true
 ```
 
-Full Linux example:
+Workflow example:
 ```yaml
+name: Lint
+
+on: pull_request
+
 jobs:
-  test-linux:
+  swiftformat-lint:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Install xcbeautify
+    - name: Install SwiftFormat
       uses: Cyberbeni/install-swift-tool@v2
       with:
-        url: https://github.com/Cyberbeni/xcbeautify
-        branch: linux-fixes
-    - name: Test
-      run: |
-        set -o pipefail
-        swift test --enable-code-coverage | xcbeautify
-    - name: Codecov
-      run: |
-        llvm-cov export -format="lcov" .build/debug/TypedNotificationCenterPackageTests.xctest -instr-profile .build/debug/codecov/default.profdata > info.lcov
-        bash <(curl -s https://codecov.io/bash) -J 'TypedNotificationCenter' -n 'linux' -F 'linux'
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        url: https://github.com/nicklockwood/SwiftFormat
+    - name: Lint
+      run: swiftformat --lint .
 ```
