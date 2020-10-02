@@ -10,7 +10,7 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 
 `v2` - Adds caching. (Enabled by default)
 
-## Usage:
+## Usage
 
 Step example:
 ```yaml
