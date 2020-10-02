@@ -28,7 +28,7 @@ async function better_exec(commandLine: string, args?: string[]): Promise<string
 
 async function resolve_version(): Promise<void> {
   await core.group('Resolving version requirement', async () => {
-    let versions = (await better_exec('git', ['ls-remote', '--tags', url]))
+    let versions = (await better_exec('git', ['ls-remote', '--refs', '--tags', url]))
       .split('\n')
       .map(function(value, index, array) {
         return value.split('/').pop() ?? ''

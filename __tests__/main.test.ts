@@ -12,7 +12,7 @@ async function better_exec(commandLine: string, args?: string[]): Promise<string
   }
 
 test('Get versions', async() => {
-    let versionsString = await better_exec('git', ['ls-remote', '--tags', 'https://github.com/realm/SwiftLint'])
+    let versionsString = await better_exec('git', ['ls-remote', '--refs', '--tags', 'https://github.com/realm/SwiftLint'])
     let versions = versionsString.split('\n').map(function(value, index, array) {
         return value.split('/').pop() ?? ''
     })
