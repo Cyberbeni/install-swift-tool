@@ -1,8 +1,8 @@
-import * as exec from '@actions/exec'
+import { exec as _exec } from '@actions/exec'
 
-export async function better_exec(commandLine: string, args?: string[]): Promise<string> {
+export async function exec(commandLine: string, args?: string[]): Promise<string> {
   let output: string = ''
-  await exec.exec(commandLine, args, {
+  await _exec(commandLine, args, {
     listeners: {
       stdout: (data: Buffer) => { output += data.toString().trim() }
     }
