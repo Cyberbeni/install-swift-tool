@@ -31,13 +31,13 @@ async function resolve_version(): Promise<void> {
   })
 }
 
-const homeDirectory = os.homedir()
 let uuid: string = ''
 let workingDirectory = ''
 let productDirectory = ''
 let cacheDirectory = ''
-function updateDirectoryNames() {
-  workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`
+function updateDirectoryNames(newUuid: string) {
+  uuid = newUuid
+  workingDirectory = `${os.homedir()}/install-swift-tool-${uuid}`
   productDirectory = `${workingDirectory}/.build/release`
   cacheDirectory = `${workingDirectory}/.build/*/release`
 }
@@ -50,8 +50,7 @@ async function create_working_directory(): Promise<void> {
       commitHash = await exec('git', ['ls-remote', url, `HEAD`])
     }
     commitHash = commitHash.substring(0,40)
-    uuid = await getUuid(url, commitHash)
-    updateDirectoryNames()
+    updateDirectoryNames(await getUuid(url, commitHash))
     await exec('mkdir', ['-p', workingDirectory])
   })
 }
@@ -77,7 +76,7 @@ async function clone_git(): Promise<void> {
     const newUuid = await getUuid(url, commitHash)
     if (uuid != newUuid) {
       const oldWorkingDirectory = workingDirectory
-      updateDirectoryNames()
+      updateDirectoryNames(newUuid)
       await exec('mv', [oldWorkingDirectory, workingDirectory])
     }
   })
