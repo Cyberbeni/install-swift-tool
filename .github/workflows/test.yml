@@ -3,16 +3,6 @@ name: "Test action"
 on: [push, pull_request]
 
 jobs:
-  ensure-built:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Ensure Built
-      run: |
-        make build
-        [[ -z $(git status --porcelain) ]] || exit 1
-
   test:
     strategy:
       matrix:
