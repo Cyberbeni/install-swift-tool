@@ -1,8 +1,8 @@
 {
   "name": "install-swift-tool",
-  "version": "2.1.2",
-  "description": "Github action to install swift based tools",
-  "main": "lib/main.js",
+  "version": "2.1.3",
+  "description": "Install swift based tools inside a GitHub Action.",
+  "main": "lib/installer.js",
   "repository": {
     "type": "git",
     "url": "github:Cyberbeni/install-swift-tool.git"
