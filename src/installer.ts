@@ -70,7 +70,6 @@ export class SwiftToolInstaller {
   async tryToRestore(): Promise<void> {
     await core.group('Trying to restore from cache', async () => {
       this.didRestore = await cache.restoreCache([this.cacheDirectory, this.productDirectory], this.cacheKey) !== undefined
-      core.setOutput('cache-hit', `${this.didRestore}`)
     })
   }
 
