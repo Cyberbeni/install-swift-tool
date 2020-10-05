@@ -23,7 +23,7 @@ export class SwiftToolInstaller {
 
   // Steps
 
-  async resolve_version(): Promise<void> {
+  async resolveVersion(): Promise<void> {
     await core.group('Resolving version requirement', async () => {
       let versions = (await exec('git', ['ls-remote', '--refs', '--tags', this.url]))
         .split('\n')
@@ -52,7 +52,7 @@ export class SwiftToolInstaller {
     this.productDirectory = `${this.workingDirectory}/.build/release`
     this.cacheDirectory = `${this.workingDirectory}/.build/*/release`
   }
-  async create_working_directory(): Promise<void> {
+  async createWorkingDirectory(): Promise<void> {
     await core.group('Creating working directory', async () => {
       let commitHash: string = ''
       if (this.branch) {
@@ -67,14 +67,14 @@ export class SwiftToolInstaller {
   }
 
   didRestore: boolean = false
-  async try_to_restore(): Promise<void> {
+  async tryToRestore(): Promise<void> {
     await core.group('Trying to restore from cache', async () => {
       this.didRestore = await cache.restoreCache([this.cacheDirectory, this.productDirectory], this.cacheKey) !== undefined
       core.setOutput('cache-hit', `${this.didRestore}`)
     })
   }
 
-  async clone_git(): Promise<void> {
+  async cloneGit(): Promise<void> {
     await core.group('Cloning repo', async () => {
       if (this.branch) {
         await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url, this.workingDirectory])
@@ -91,13 +91,13 @@ export class SwiftToolInstaller {
     })
   }
 
-  async build_tool(): Promise<void> {
+  async buildTool(): Promise<void> {
     await core.group('Building tool', async () => {
       await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release', '--disable-sandbox'])
     })
   }
 
-  async try_to_cache(): Promise<void> {
+  async tryToCache(): Promise<void> {
     await core.group('Trying to save to cache', async () => {
       try {
         await cache.saveCache([this.cacheDirectory, this.productDirectory], this.cacheKey)
@@ -107,7 +107,7 @@ export class SwiftToolInstaller {
     })
   }
 
-  async export_path(): Promise<void> {
+  async exportPath(): Promise<void> {
     await core.group('Exporting path', async () => {
       core.addPath(this.productDirectory)
     })
@@ -117,20 +117,20 @@ export class SwiftToolInstaller {
 
   async install(): Promise<void> {
     if (this.version) {
-      await this.resolve_version()
+      await this.resolveVersion()
     }
-    await this.create_working_directory()
+    await this.createWorkingDirectory()
     if (this.useCache) {
-      await this.try_to_restore()
+      await this.tryToRestore()
     }
     if (!this.didRestore) {
-      await this.clone_git()
-      await this.build_tool()
+      await this.cloneGit()
+      await this.buildTool()
       if (this.useCache) {
-        await this.try_to_cache()
+        await this.tryToCache()
       }
     }
-    await this.export_path()
+    await this.exportPath()
   }
 
   static async install(url: string, branch: string, version: string, useCache: boolean): Promise<void> {
