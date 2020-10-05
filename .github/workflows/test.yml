@@ -3,6 +3,16 @@ name: "Test action"
 on: [push, pull_request]
 
 jobs:
+  ensure-built:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build
+      run: |
+        make build
+        [[ -z $(git status --porcelain) ]] || exit 1
+
   test:
     strategy:
       matrix:
@@ -11,10 +21,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Build
-      run: |
-        make build
-        [[ -z $(git status --porcelain) ]] || exit 1
     - name: Run action without branch
       uses: ./
       with:
