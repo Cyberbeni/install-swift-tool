@@ -50,10 +50,8 @@ async function create_working_directory(): Promise<void> {
       commitHash = await exec('git', ['ls-remote', url, `HEAD`])
     }
     commitHash = commitHash.substring(0,40)
-
     uuid = await getUuid(url, commitHash)
     updateDirectoryNames()
-
     await exec('mkdir', ['-p', workingDirectory])
   })
 }
