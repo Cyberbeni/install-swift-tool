@@ -43,6 +43,13 @@ jobs:
       run: swiftformat --lint .
 ```
 
+GitHub Action example:
+```tsx
+import { SwiftToolInstaller } from 'install-swift-tool'
+
+SwiftToolInstaller.install(url, branch, version, useCache)
+```
+
 ## How to contribute
 
 Install npm and yarn on macOS (Homebrew required)

@@ -7,6 +7,10 @@
     "outDir": "./lib",
     "rootDir": "./src",
     "esModuleInterop": true,
+    // Uncomment to generate new declaration, then remove unnecessary things by hand
+    // "declaration": true,
+    // "declarationDir": "./types",
+
     // Lint:
     "strict": true,
     "noImplicitAny": false,

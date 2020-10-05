@@ -1,0 +1,10 @@
+# Add files/folders only used for the GitHub Action here
+__tests__
+.github
+action.yml
+dist/
+jest.config.js
+lib/main.js
+Makefile
+src/
+tsconfig.json
