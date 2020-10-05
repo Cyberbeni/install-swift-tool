@@ -6,7 +6,7 @@ import * as semver from 'semver'
 import { exec, getUuid } from './helpers'
 
 export class SwiftToolInstaller {
-  
+
   // Input
 
   readonly url: string
