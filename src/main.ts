@@ -2,9 +2,8 @@ import * as cache from '@actions/cache'
 import * as core from '@actions/core'
 import * as os from 'os'
 import * as semver from 'semver'
-import { v5 as uuidv5 } from 'uuid'
 
-import { exec } from './helpers'
+import { exec, getUuid } from './helpers'
 
 // Inputs
 
@@ -32,11 +31,16 @@ async function resolve_version(): Promise<void> {
   })
 }
 
-const homeDirectory = os.homedir()
 let uuid: string = ''
 let workingDirectory = ''
 let productDirectory = ''
 let cacheDirectory = ''
+function updateDirectoryNames(newUuid: string) {
+  uuid = newUuid
+  workingDirectory = `${os.homedir()}/install-swift-tool-${uuid}`
+  productDirectory = `${workingDirectory}/.build/release`
+  cacheDirectory = `${workingDirectory}/.build/*/release`
+}
 async function create_working_directory(): Promise<void> {
   await core.group('Creating working directory', async () => {
     let commitHash: string = ''
@@ -46,13 +50,7 @@ async function create_working_directory(): Promise<void> {
       commitHash = await exec('git', ['ls-remote', url, `HEAD`])
     }
     commitHash = commitHash.substring(0,40)
-    const swiftVersion = await exec('swift', ['-version'])
-
-    uuid = uuidv5(`${url}-${commitHash}-${os.version}-${swiftVersion}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
-    workingDirectory = `${homeDirectory}/install-swift-tool-${uuid}`
-    productDirectory = `${workingDirectory}/.build/release`
-    cacheDirectory = `${workingDirectory}/.build/*/release`
-
+    updateDirectoryNames(await getUuid(url, commitHash))
     await exec('mkdir', ['-p', workingDirectory])
   })
 }
@@ -74,7 +72,13 @@ async function clone_git(): Promise<void> {
     } else {
       await exec('git', ['clone', '--depth', '1', url, workingDirectory])
     }
-    await exec('git', ['-C', workingDirectory,'rev-parse', 'HEAD'])
+    const commitHash = await exec('git', ['-C', workingDirectory,'rev-parse', 'HEAD'])
+    const newUuid = await getUuid(url, commitHash)
+    if (uuid != newUuid) {
+      const oldWorkingDirectory = workingDirectory
+      updateDirectoryNames(newUuid)
+      await exec('mv', [oldWorkingDirectory, workingDirectory])
+    }
   })
 }
 

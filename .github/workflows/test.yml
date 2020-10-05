@@ -12,9 +12,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Build
-      run: |
-        make build
-        [[ -z $(git status --porcelain) ]] || exit 1
+      run: make build
     - name: Run action without branch
       uses: ./
       with:
