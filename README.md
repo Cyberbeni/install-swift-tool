@@ -27,7 +27,10 @@ Workflow example:
 ```yaml
 name: Lint
 
-on: pull_request
+on: 
+  pull_request:
+  push:
+    branches: master # https://docs.github.com/en/free-pro-team@latest/actions/guides/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
 
 jobs:
   swiftformat-lint:
