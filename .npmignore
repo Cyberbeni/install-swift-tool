@@ -1,10 +1,11 @@
 # Add files/folders only used for the GitHub Action here
 __tests__
+.gitattributes
 .github
 action.yml
-dist/
+dist
 jest.config.js
 lib/main.js
 Makefile
-src/
+src
 tsconfig.json
