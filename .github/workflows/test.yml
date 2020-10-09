@@ -12,7 +12,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Build
-      run: make build
+      run: |
+        make build
+        git status
     - name: Run action without branch
       uses: ./
       with:

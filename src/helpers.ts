@@ -16,13 +16,14 @@ export async function exec(commandLine: string, args?: string[]): Promise<string
 
 export async function getUuid(url: string, commitHash: string): Promise<string> {
   const swiftVersion = await exec('swift', ['-version'])
-  let additionalInfo = `${os.version}-${swiftVersion}`
+  let additionalInfo = `${os.version()}-${swiftVersion}`
   core.info(additionalInfo)
   if (os.platform() == "darwin") {
     let macVersion = await exec('sw_vers', ['-productVersion'])
     if (semver.gte(macVersion, "10.14.4")) {
-      additionalInfo = `macos-${os.arch}`
+      additionalInfo = `macos-${os.arch()}`
     }
   }
+  core.info(additionalInfo)
   return _uuid(`${url}-${commitHash}-${additionalInfo}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
 }
