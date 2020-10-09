@@ -26,7 +26,7 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
       osVersion = await exec('uname', ['-v']) // os.version is somehow undefined on GitHub runner
     }
     const swiftVersion = await exec('swift', ['-version'])
-    additionalInfo = `${osVersion}-${swiftVersion}`
+    additionalInfo = `${osVersion}-${os.arch()}-${swiftVersion}`
   }
   return _uuid(`${url}-${commitHash}-${additionalInfo}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
 }
