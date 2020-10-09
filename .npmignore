@@ -6,6 +6,7 @@ action.yml
 dist
 jest.config.js
 lib/main.js
+types/main.d.ts
 Makefile
 src
 tsconfig.json
