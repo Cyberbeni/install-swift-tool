@@ -15,8 +15,9 @@ export async function exec(commandLine: string, args?: string[]): Promise<string
 }
 
 export async function getUuid(url: string, commitHash: string): Promise<string> {
+  const osVersion = await exec('uname', ['-v']) // os.version is somehow undefined on GitHub runner
   const swiftVersion = await exec('swift', ['-version'])
-  let additionalInfo = `${os.version}-${swiftVersion}`
+  let additionalInfo = `${osVersion}-${swiftVersion}`
   core.info(additionalInfo)
   if (os.platform() == "darwin") {
     let macVersion = await exec('sw_vers', ['-productVersion'])
