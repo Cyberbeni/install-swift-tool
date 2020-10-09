@@ -11,4 +11,5 @@ jobs:
     - name: Ensure Built
       run: |
         make build
+        git status
         [[ -z $(git status --porcelain) ]] || exit 1

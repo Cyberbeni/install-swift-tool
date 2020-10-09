@@ -16,7 +16,7 @@ export async function exec(commandLine: string, args?: string[]): Promise<string
 
 export async function getUuid(url: string, commitHash: string): Promise<string> {
   const swiftVersion = await exec('swift', ['-version'])
-  let additionalInfo = `${os.version()}-${swiftVersion}`
+  let additionalInfo = `${os.version}-${swiftVersion}`
   core.info(additionalInfo)
   if (os.platform() == "darwin") {
     let macVersion = await exec('sw_vers', ['-productVersion'])
