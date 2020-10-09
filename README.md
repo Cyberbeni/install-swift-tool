@@ -50,7 +50,7 @@ GitHub Action example:
 ```tsx
 import { SwiftToolInstaller } from 'install-swift-tool'
 
-SwiftToolInstaller.install(url, branch, version, useCache)
+await SwiftToolInstaller.install(url, branch, version, useCache)
 ```
 
 ## How to contribute
