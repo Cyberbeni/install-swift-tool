@@ -15,14 +15,28 @@ export async function exec(commandLine: string, args?: string[]): Promise<string
 }
 
 export async function getUuid(url: string, commitHash: string): Promise<string> {
-  const osVersion = await exec('uname', ['-v']) // os.version is somehow undefined on GitHub runner
-  const swiftVersion = await exec('swift', ['-version'])
-  let additionalInfo = `${osVersion}-${swiftVersion}`
-  core.info(additionalInfo)
-  if (os.platform() == "darwin") {
-    let macVersion = await exec('sw_vers', ['-productVersion'])
-    if (semver.gte(macVersion, "10.14.4")) {
-      additionalInfo = `macos-${os.arch()}`
+  let additionalInfo: string
+  switch (os.platform()) {
+    case "darwin": {
+      let macVersion = await exec('sw_vers', ['-productVersion'])
+      if (semver.gte(macVersion, "10.14.4")) {
+        additionalInfo = `macos-${os.arch()}`
+      } else {
+        additionalInfo = `macos-embed-swift-${os.arch()}`
+      }
+      break
+    }
+    case "linux": {
+      const osCodename = await exec('lsb_release', ['-c'])
+      const kernelVersion = os.release()
+      const swiftVersion = await exec('swift', ['-version'])
+      additionalInfo = `${osCodename}-${kernelVersion}-${swiftVersion}`
+      break
+    }
+    default: {
+      const osVersion = await exec('uname', ['-v']) // os.version is somehow undefined on GitHub runner
+      const swiftVersion = await exec('swift', ['-version'])
+      additionalInfo = `${osVersion}-${swiftVersion}`
     }
   }
   core.info(additionalInfo)
