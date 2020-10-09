@@ -80,7 +80,12 @@ export class SwiftToolInstaller {
       } else {
         await exec('git', ['clone', '--depth', '1', this.url, this.workingDirectory])
       }
-      const commitHash = await exec('git', ['-C', this.workingDirectory,'rev-parse', 'HEAD'])
+      // `git rev-parse HEAD` gave different result than `git ls-remote -ht ...`
+      // when used with an annotated tag: https://stackoverflow.com/a/15472310
+      // This seems to print the same hash(es) but only if `git clone` used `--depth 1`
+      const commitHash = (await exec('git', ['-C', this.workingDirectory,'show-ref', '-s']))
+        .split('\n')
+        .pop() ?? ''
       const newUuid = await getUuid(this.url, commitHash)
       if (this.uuid != newUuid) {
         const oldWorkingDirectory = this.workingDirectory

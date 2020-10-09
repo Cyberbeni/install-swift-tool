@@ -22,7 +22,7 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
     if (os.version != undefined) {
       osVersion = os.version()
     } else {
-      core.warning('os.version undefined, using `uname -v` instead')
+      core.info('os.version undefined, using `uname -v` instead')
       osVersion = await exec('uname', ['-v']) // os.version is somehow undefined on GitHub runner
     }
     const swiftVersion = await exec('swift', ['-version'])
