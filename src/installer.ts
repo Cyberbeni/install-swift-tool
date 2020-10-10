@@ -101,7 +101,7 @@ export class SwiftToolInstaller {
       // They didn't make any difference when building SwiftLint
       // '--disable-automatic-resolution' caused build error on Linux for realm/SwiftLint@0.40.3:
       //    'cannot update Package.resolved file because automatic resolution is disabled'
-      const additionalOptions = await supportedBuildOptions(['--disable-sandbox', '--disable-index-store', '--disable-package-manifest-caching', '--disable-prefetching'])
+      const additionalOptions = await supportedBuildOptions(['--disable-sandbox'])
       await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release'].concat(additionalOptions))
     })
   }
