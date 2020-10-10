@@ -97,9 +97,11 @@ export class SwiftToolInstaller {
 
   async buildTool(): Promise<void> {
     await core.group('Building tool', async () => {
-      // TODO: Research what these flags do: '--disable-automatic-resolution', '--disable-index-store', '--disable-package-manifest-caching', '--disable-prefetching'
+      // TODO: Research what these flags do: '--disable-index-store', '--disable-package-manifest-caching', '--disable-prefetching'
       // They didn't make any difference when building SwiftLint
-      const additionalOptions = await supportedBuildOptions(['--disable-sandbox', '--disable-automatic-resolution', '--disable-index-store', '--disable-package-manifest-caching', '--disable-prefetching'])
+      // '--disable-automatic-resolution' caused build error on Linux for realm/SwiftLint@0.40.3:
+      //    'cannot update Package.resolved file because automatic resolution is disabled'
+      const additionalOptions = await supportedBuildOptions(['--disable-sandbox', '--disable-index-store', '--disable-package-manifest-caching', '--disable-prefetching'])
       await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release'].concat(additionalOptions))
     })
   }
