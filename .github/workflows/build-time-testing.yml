@@ -1,0 +1,21 @@
+name: "Test action"
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Build
+      run: make build
+    - name: Run action without cache
+      uses: ./
+      with:
+        url: https://github.com/realm/SwiftLint
+        branch: '0.40.3'
+        use-cache: false
