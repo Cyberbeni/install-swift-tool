@@ -1,6 +1,9 @@
 name: "Test build time"
 
-on: push
+on:
+  push:
+    branches-ignore:
+      - '**'
 
 jobs:
   test:
