@@ -3,7 +3,7 @@ import * as core from '@actions/core'
 import * as os from 'os'
 import * as semver from 'semver'
 
-import { exec, getUuid } from './helpers'
+import { exec, getUuid, supportedBuildOptions } from './helpers'
 
 export class SwiftToolInstaller {
 
@@ -97,7 +97,10 @@ export class SwiftToolInstaller {
 
   async buildTool(): Promise<void> {
     await core.group('Building tool', async () => {
-      await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release', '--disable-sandbox'])
+      // TODO: Research what these flags do: '--disable-automatic-resolution', '--disable-index-store', '--disable-package-manifest-caching', '--disable-prefetching'
+      // They didn't make any difference when building SwiftLint
+      const additionalOptions = await supportedBuildOptions(['--disable-sandbox'])
+      await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release'].concat(additionalOptions))
     })
   }
 
