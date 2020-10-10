@@ -99,7 +99,7 @@ export class SwiftToolInstaller {
     await core.group('Building tool', async () => {
       // TODO: Research what these flags do: '--disable-automatic-resolution', '--disable-index-store', '--disable-package-manifest-caching', '--disable-prefetching'
       // They didn't make any difference when building SwiftLint
-      const additionalOptions = await supportedBuildOptions(['--disable-sandbox'])
+      const additionalOptions = await supportedBuildOptions(['--disable-sandbox', '--disable-automatic-resolution', '--disable-index-store', '--disable-package-manifest-caching', '--disable-prefetching'])
       await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release'].concat(additionalOptions))
     })
   }
