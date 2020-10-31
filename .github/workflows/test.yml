@@ -27,7 +27,7 @@ jobs:
       with:
         url: https://github.com/realm/SwiftLint
         version: '*'
-        use-cache: {{ runner.os == 'Linux' }}
+        use-cache: ${{ runner.os == 'Linux' }}
     - name: Test tools in path
       run: |
         echo "class Test {}" > ./test.swift
