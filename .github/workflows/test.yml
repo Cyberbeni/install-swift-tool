@@ -26,9 +26,11 @@ jobs:
       uses: ./
       with:
         url: https://github.com/realm/SwiftLint
-        version: '^0'
+        version: '*'
+        use-cache: ${{ runner.os == 'Linux' }}
     - name: Test tools in path
       run: |
-        which swiftformat
-        which xcbeautify
-        which swiftlint
+        echo "class Test {}" > ./test.swift
+        swiftformat --lint ./test.swift
+        xcbeautify --version
+        swiftlint lint ./test.swift
