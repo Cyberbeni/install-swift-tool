@@ -29,6 +29,7 @@ jobs:
         version: '^0'
     - name: Test tools in path
       run: |
-        which swiftformat
-        which xcbeautify
-        which swiftlint
+        echo "class Test {}" > ./test.swift
+        swiftformat --lint ./test.swift
+        xcbeautify --version
+        swiftlint lint ./test.swift
