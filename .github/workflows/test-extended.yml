@@ -1,0 +1,24 @@
+name: "Test action"
+
+on: push
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
+    container:
+      image: swift:5.3
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run action without branch
+      uses: ./
+      with:
+        url: https://github.com/apple/swift-format
+        version: '^0.50300.0'
+    - name: Test tools in path
+      run: |
+        echo "class Test {}" > ./test.swift
+        swift-format ./test.swift
