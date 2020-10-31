@@ -1,6 +1,7 @@
 name: "Test action - extended"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
