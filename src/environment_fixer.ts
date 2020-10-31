@@ -16,6 +16,7 @@ export class SwiftEnvironmentFixer {
       for (const path of possiblePaths) {
         fs.stat(`${path}/${libName}`, (err) => {
           if (err == null) {
+            core.info(`Setting to: '${path}'`)
             core.exportVariable(envVar, path)
             exported = true
           }
