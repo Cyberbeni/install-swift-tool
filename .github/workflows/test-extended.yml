@@ -1,19 +1,16 @@
-name: "Test action"
+name: "Test action - extended"
 
 on: push
 
 jobs:
   test:
-    strategy:
-      matrix:
-        os: [ubuntu-18.04, ubuntu-20.04]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     container:
       image: swift:5.3
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Run action without branch
+    - name: Run action with version
       uses: ./
       with:
         url: https://github.com/apple/swift-format
