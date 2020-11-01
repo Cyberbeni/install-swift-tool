@@ -116,7 +116,7 @@ export class SwiftToolInstaller {
           try {
             fs.accessSync(itemPath, fs.constants.X_OK)
             if (fs.lstatSync(itemPath).isDirectory()) {
-              throw new Error("Delete directory")
+              fs.rmdirSync(itemPath)
             }
           } catch {
             fs.unlinkSync(itemPath)
