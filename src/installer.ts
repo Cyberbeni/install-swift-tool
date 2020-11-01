@@ -107,8 +107,8 @@ export class SwiftToolInstaller {
     })
   }
 
-  async cleanupIntermediateBuildProducts(): Promise<void> {
-    await core.group('Deleting intermediate build products', async () => {
+  async tryToCleanupIntermediateBuildProducts(): Promise<void> {
+    await core.group('Trying to delete intermediate build products', async () => {
       try {
         const contents = fs.readdirSync(this.productDirectory)
         for (const itemName of contents) {
@@ -162,7 +162,7 @@ export class SwiftToolInstaller {
       await this.cloneGit()
       await this.buildTool()
       if (this.useCache) {
-        await this.cleanupIntermediateBuildProducts()
+        await this.tryToCleanupIntermediateBuildProducts()
         await this.tryToCache()
       }
     }
