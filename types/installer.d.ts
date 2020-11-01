@@ -16,6 +16,7 @@ export declare class SwiftToolInstaller {
     tryToRestore(): Promise<void>;
     cloneGit(): Promise<void>;
     buildTool(): Promise<void>;
+    cleanupIntermediateBuildProducts(): Promise<void>;
     tryToCache(): Promise<void>;
     exportPath(): Promise<void>;
     install(): Promise<void>;
