@@ -1,5 +1,6 @@
 import * as cache from '@actions/cache'
 import * as core from '@actions/core'
+import * as fs from 'fs'
 import * as os from 'os'
 import * as semver from 'semver'
 
@@ -106,6 +107,31 @@ export class SwiftToolInstaller {
     })
   }
 
+  async tryToCleanupIntermediateBuildProducts(): Promise<void> {
+    await core.group('Trying to delete intermediate build products', async () => {
+      try {
+        const contents = fs.readdirSync(this.productDirectory)
+        for (const itemName of contents) {
+          const itemPath = `${this.productDirectory}/${itemName}`
+          try {
+            fs.accessSync(itemPath, fs.constants.X_OK)
+            if (fs.lstatSync(itemPath).isDirectory()) {
+              fs.rmdirSync(itemPath, { recursive: true })
+            }
+          } catch {
+            if (fs.lstatSync(itemPath).isDirectory()) {
+              fs.rmdirSync(itemPath, { recursive: true })
+            } else {
+              fs.unlinkSync(itemPath)
+            }
+          }
+        }
+      } catch (error) {
+        core.info(error.message)
+      }
+    })
+  }
+
   async tryToCache(): Promise<void> {
     await core.group('Trying to save to cache', async () => {
       try {
@@ -136,6 +162,7 @@ export class SwiftToolInstaller {
       await this.cloneGit()
       await this.buildTool()
       if (this.useCache) {
+        await this.tryToCleanupIntermediateBuildProducts()
         await this.tryToCache()
       }
     }

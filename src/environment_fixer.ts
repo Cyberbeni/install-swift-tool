@@ -4,7 +4,8 @@ import * as os from 'os'
 import { env } from 'process'
 
 export class SwiftEnvironmentFixer {
-  static async fixSourceKitPath () {
+  static async fixSourceKitPath(): Promise<void> {
+    // https://github.com/Cyberbeni/install-swift-tool/issues/68
     const envVar = 'LINUX_SOURCEKIT_LIB_PATH'
     if(env[envVar] != undefined) {
       return
@@ -27,7 +28,7 @@ export class SwiftEnvironmentFixer {
     })
   }
 
-  static async fixAll() {
+  static async fixAll(): Promise<void> {
     if (os.platform() == 'linux') {
       await this.fixSourceKitPath()
     }
