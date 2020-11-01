@@ -28,7 +28,7 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
     const swiftVersion = await exec('swift', ['-version'])
     additionalInfo = `${osVersion}-${os.arch()}-${swiftVersion}`
   }
-  return _uuid(`${url}-${commitHash}-${additionalInfo}-testing4`, '6050636b-7499-41d4-b9c6-756aff9856d0')
+  return _uuid(`${url}-${commitHash}-${additionalInfo}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
 }
 
 export async function supportedBuildOptions(argsToTest: string[]): Promise<string[]> {
