@@ -116,11 +116,11 @@ export class SwiftToolInstaller {
           try {
             fs.accessSync(itemPath, fs.constants.X_OK)
             if (fs.lstatSync(itemPath).isDirectory()) {
-              fs.rmdirSync(itemPath)
+              fs.rmdirSync(itemPath, { recursive: true })
             }
           } catch {
             if (fs.lstatSync(itemPath).isDirectory()) {
-              fs.rmdirSync(itemPath)
+              fs.rmdirSync(itemPath, { recursive: true })
             } else {
               fs.unlinkSync(itemPath)
             }
