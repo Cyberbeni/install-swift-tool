@@ -119,7 +119,11 @@ export class SwiftToolInstaller {
               fs.rmdirSync(itemPath)
             }
           } catch {
-            fs.unlinkSync(itemPath)
+            if (fs.lstatSync(itemPath).isDirectory()) {
+              fs.rmdirSync(itemPath)
+            } else {
+              fs.unlinkSync(itemPath)
+            }
           }
         }
       } catch (error) {
