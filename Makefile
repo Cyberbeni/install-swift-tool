@@ -1,6 +1,7 @@
 .PHONY: build
 build:
 	yarn
+	npm run format
 	npm run build
 	npm run package
 
