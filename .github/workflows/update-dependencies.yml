@@ -1,4 +1,4 @@
-name: "Update Dependencies"
+name: "Update dependencies"
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: '37 4 * * 6'
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout

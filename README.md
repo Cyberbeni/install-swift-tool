@@ -18,7 +18,7 @@ Step example:
   uses: Cyberbeni/install-swift-tool@v2
   with:
     url: https://github.com/Cyberbeni/xcbeautify
-    branch: linux-fixes # optional
+    branch: linux-fixes # optional, branch or tag
     version: '*' # optional, overrides branch, format: https://devhints.io/semver
     use-cache: true # optinal, default: true
 ```

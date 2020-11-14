@@ -169,7 +169,7 @@ export class SwiftToolInstaller {
     await this.exportPath()
   }
 
-  static async install(url: string, branch: string, version: string, useCache: boolean): Promise<void> {
+  static async install(url: string, branch = '', version = '', useCache = true): Promise<void> {
     const installer = new SwiftToolInstaller(url, branch, version, useCache)
     await installer.install()
   }
