@@ -1,4 +1,4 @@
-name: "Manual Update"
+name: "Update Dependencies"
 
 on:
   workflow_dispatch:
@@ -23,4 +23,4 @@ jobs:
         branch: yarn-upgrade-latest
         delete-branch: true
         title: "Update dependencies"
-        body: "Automatically created by the 'Manual Update' workflow"
+        body: "Automatically created by the 'Update Dependencies' workflow"
