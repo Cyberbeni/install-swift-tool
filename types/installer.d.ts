@@ -20,5 +20,5 @@ export declare class SwiftToolInstaller {
     tryToCache(): Promise<void>;
     exportPath(): Promise<void>;
     install(): Promise<void>;
-    static install(url: string, branch: string, version: string, useCache: boolean): Promise<void>;
+    static install(url: string, branch?: string, version?: string, useCache?: boolean): Promise<void>;
 }
