@@ -2,6 +2,7 @@
 __tests__
 .gitattributes
 .github
+.prettierrc.json
 action.yml
 dist
 jest.config.js
