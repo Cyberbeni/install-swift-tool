@@ -24,9 +24,9 @@ jobs:
       uses: dorny/paths-filter@v2
       id: changes
       with:
-      filters: |
-        dist:
-          - 'dist/**'
+        filters: |
+          dist:
+            - 'dist/**'
     - name: Create Pull Request
       if: steps.changes.outputs.dist == 'true' || github.event.inputs.force == 'true'
       uses: peter-evans/create-pull-request@v3
