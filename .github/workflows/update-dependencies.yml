@@ -19,7 +19,9 @@ jobs:
       run: yarn upgrade --latest
     - name: Build
       run: make build
-    - uses: dorny/paths-filter@v2
+    - name: Detect changes in distributed code
+      if: github.event.inputs.force != 'true'
+      uses: dorny/paths-filter@v2
       id: changes
       with:
       filters: |
