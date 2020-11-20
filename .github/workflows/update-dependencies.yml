@@ -2,6 +2,10 @@ name: "Update dependencies"
 
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Also create pull request if only developer dependencies changed'
+        default: 'false'
   schedule:
     - cron: '37 4 * * 6'
 
@@ -15,7 +19,14 @@ jobs:
       run: yarn upgrade --latest
     - name: Build
       run: make build
+    - uses: dorny/paths-filter@v2
+      id: changes
+      with:
+      filters: |
+        dist:
+          - 'dist/**'
     - name: Create Pull Request
+      if: steps.changes.outputs.dist == 'true' || github.event.inputs.force == 'true'
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
