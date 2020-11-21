@@ -4,7 +4,7 @@ all:
 	npm run build
 	npm run package
 
-.PHONY: test-local
+.PHONY: test
 test:
 	yarn
 	npm run build
