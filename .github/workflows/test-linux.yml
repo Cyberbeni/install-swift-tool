@@ -1,0 +1,26 @@
+name: "Test linux rebuild criteria"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '16 6 * * *'
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      ref: linux-rebuild-testing
+    - name: Get swiftlint with exact version
+      uses: ./
+      with:
+        url: https://github.com/realm/SwiftLint
+        branch: '0.41.0'
+    - name: Test swiftlint
+      run: |
+        echo "class Test {}" > ./test.swift
+        swiftlint lint ./test.swift
