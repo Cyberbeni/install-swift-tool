@@ -14,7 +14,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      ref: linux-rebuild-testing
+      with:
+        ref: linux-rebuild-testing
     - name: Get swiftlint with exact version
       uses: ./
       with:
