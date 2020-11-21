@@ -4,7 +4,7 @@ import { SwiftToolInstaller } from './installer'
 
 // Inputs
 
-const url: string = core.getInput('url')
+const url: string = core.getInput('url', { required: true })
 const branch: string = core.getInput('branch')
 const version: string = core.getInput('version')
 const useCache: boolean = core.getInput('use-cache') == 'true'
