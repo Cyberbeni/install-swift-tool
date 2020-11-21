@@ -15,13 +15,13 @@ export async function exec(commandLine: string, args?: string[]): Promise<string
 }
 
 export async function getUuid(url: string, commitHash: string): Promise<string> {
-	const platform = os.platform()
 	let additionalInfo: string
-	if (platform == 'darwin') {
+	if (os.platform() == 'darwin') {
 		additionalInfo = `macos-${os.arch()}`
 	} else {
+		const osVersion = await exec('uname', ['-v'])
 		const swiftVersion = await exec('swift', ['-version'])
-		additionalInfo = `${platform}-${os.arch()}-${swiftVersion}`
+		additionalInfo = `${osVersion}-${os.arch()}-${swiftVersion}`
 	}
 	return _uuid(`${url}-${commitHash}-${additionalInfo}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
 }
