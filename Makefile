@@ -1,12 +1,11 @@
-.PHONY: build
-build:
+all:
 	yarn
 	npm run format
 	npm run build
 	npm run package
 
-.PHONY: test-local
-test-local:
+.PHONY: test
+test:
 	yarn
 	npm run build
 	npm test

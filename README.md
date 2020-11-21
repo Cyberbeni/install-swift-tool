@@ -62,10 +62,10 @@ make once-mac
 
 Run before commit
 ```bash
-make build
+make
 ```
 
 Run tests in `./__test__/` (for testing parts of the logic, the real tests are run on GitHub after push/pull request)
 ```bash
-make test-local
+make test
 ```
