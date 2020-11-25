@@ -10,8 +10,9 @@ async function main(): Promise<void> {
 	const useCache: boolean = core.getInput('use-cache') == 'true'
 
 	// Run
+	await SwiftEnvironmentFixer.fixBeforeRun()
 	await SwiftToolInstaller.install(url, branch, version, useCache)
-	await SwiftEnvironmentFixer.fixAll()
+	await SwiftEnvironmentFixer.fixAfterRun()
 }
 
 main().catch(error => {

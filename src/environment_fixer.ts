@@ -3,7 +3,20 @@ import * as fs from 'fs'
 import * as os from 'os'
 import { env } from 'process'
 
+import { exec } from './helpers'
+
 export class SwiftEnvironmentFixer {
+	static async fixTar(): Promise<void> {
+		await core.group(`Installing gnu-tar`, async () => {
+			// https://github.com/Cyberbeni/install-swift-tool/issues/69
+			// https://formulae.brew.sh/formula/gnu-tar
+			// PATH="$(brew --prefix)/opt/gnu-tar/libexec/gnubin:$PATH"
+			await exec('brew', ['install', 'gnu-tar'])
+			const brewPrefix = await exec('brew', ['--prefix'])
+			core.addPath(`${brewPrefix}/opt/gnu-tar/libexec/gnubin`)
+		})
+	}
+
 	static async fixSourceKitPath(): Promise<void> {
 		// https://github.com/Cyberbeni/install-swift-tool/issues/68
 		const envVar = 'LINUX_SOURCEKIT_LIB_PATH'
@@ -28,7 +41,13 @@ export class SwiftEnvironmentFixer {
 		})
 	}
 
-	static async fixAll(): Promise<void> {
+	static async fixBeforeRun(): Promise<void> {
+		if (os.platform() == 'darwin') {
+			await this.fixTar()
+		}
+	}
+
+	static async fixAfterRun(): Promise<void> {
 		if (os.platform() == 'linux') {
 			await this.fixSourceKitPath()
 		}
