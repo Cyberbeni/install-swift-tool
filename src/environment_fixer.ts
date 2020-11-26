@@ -7,13 +7,13 @@ import { exec } from './helpers'
 
 export class SwiftEnvironmentFixer {
 	static async fixTar(): Promise<void> {
-		if ((await exec('tar', ['--version'])).includes('GNU tar')) {
-			return
-		}
-		await core.group(`Installing gnu-tar`, async () => {
+		await core.group(`Ensuring gnu-tar is used`, async () => {
 			// https://github.com/Cyberbeni/install-swift-tool/issues/69
 			// https://formulae.brew.sh/formula/gnu-tar
 			// PATH="$(brew --prefix)/opt/gnu-tar/libexec/gnubin:$PATH"
+			if ((await exec('tar', ['--version'])).includes('GNU tar')) {
+				return
+			}
 			await exec('brew', ['install', 'gnu-tar'])
 			const brewPrefix = await exec('brew', ['--prefix'])
 			core.addPath(`${brewPrefix}/opt/gnu-tar/libexec/gnubin`)
