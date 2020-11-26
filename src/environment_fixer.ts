@@ -14,7 +14,7 @@ export class SwiftEnvironmentFixer {
 			if ((await exec('tar', ['--version'])).includes('GNU tar')) {
 				return
 			}
-			await exec('brew', ['install', 'gnu-tar'])
+			await exec('env', ['HOMEBREW_NO_AUTO_UPDATE=1', 'brew', 'install', 'gnu-tar'])
 			const brewPrefix = await exec('brew', ['--prefix'])
 			core.addPath(`${brewPrefix}/opt/gnu-tar/libexec/gnubin`)
 		})
@@ -44,8 +44,8 @@ export class SwiftEnvironmentFixer {
 		})
 	}
 
-	static async fixBeforeRun(): Promise<void> {
-		if (os.platform() == 'darwin') {
+	static async fixBeforeRun(cachingEnabled: boolean): Promise<void> {
+		if (os.platform() == 'darwin' && cachingEnabled) {
 			await this.fixTar()
 		}
 	}

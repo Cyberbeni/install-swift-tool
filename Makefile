@@ -1,3 +1,4 @@
+.PHONY: all
 all:
 	yarn
 	npm run format
