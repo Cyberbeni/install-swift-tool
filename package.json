@@ -11,7 +11,7 @@
     "format": "eslint --max-warnings=0 --fix src/**/*.ts",
     "lint": "eslint src/**/*.ts",
     "build": "tsc",
-    "package": "ncc build -m -o dist ./lib/main.js",
+    "package": "ncc build --minify --out dist ./lib/main.js",
     "test": "jest"
   },
   "keywords": [],
