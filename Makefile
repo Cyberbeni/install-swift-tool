@@ -7,6 +7,7 @@ all:
 .PHONY: test
 test:
 	yarn
+	npm run lint
 	npm run build
 	npm test
 
