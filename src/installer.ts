@@ -25,10 +25,10 @@ export class SwiftToolInstaller {
 
 	async resolveVersion(): Promise<void> {
 		await core.group('Resolving version requirement', async () => {
-			let versions = (await exec('git', ['ls-remote', '--refs', '--tags', this.url])).split('\n').map(function (value) {
+			const versions = (await exec('git', ['ls-remote', '--refs', '--tags', this.url])).split('\n').map(function (value) {
 				return value.split('/').pop() ?? ''
 			})
-			let targetVersion = semver.maxSatisfying(versions, this.version)
+			const targetVersion = semver.maxSatisfying(versions, this.version)
 			if (targetVersion) {
 				core.info(`Resolved version: ${targetVersion}`)
 				this.branch = targetVersion
@@ -38,12 +38,12 @@ export class SwiftToolInstaller {
 		})
 	}
 
-	uuid: string = ''
-	cacheKey: string = ''
+	uuid = ''
+	cacheKey = ''
 	workingDirectory = ''
 	productDirectory = ''
 	cacheDirectory = ''
-	updateDirectoryNames(newUuid: string) {
+	updateDirectoryNames(newUuid: string): void {
 		this.uuid = newUuid
 		this.cacheKey = `installswifttool-${this.uuid}`
 		this.workingDirectory = `${os.homedir()}/install-swift-tool-${this.uuid}`
@@ -52,11 +52,11 @@ export class SwiftToolInstaller {
 	}
 	async createWorkingDirectory(): Promise<void> {
 		await core.group('Creating working directory', async () => {
-			let commitHash: string = ''
+			let commitHash = ''
 			if (this.branch) {
 				commitHash = await exec('git', ['ls-remote', '-ht', this.url, `refs/heads/${this.branch}`, `refs/tags/${this.branch}`])
 			} else {
-				commitHash = await exec('git', ['ls-remote', this.url, `HEAD`])
+				commitHash = await exec('git', ['ls-remote', this.url, 'HEAD'])
 			}
 			commitHash = commitHash.substring(0, 40)
 			this.updateDirectoryNames(await getUuid(this.url, commitHash))
@@ -64,7 +64,7 @@ export class SwiftToolInstaller {
 		})
 	}
 
-	didRestore: boolean = false
+	didRestore = false
 	async tryToRestore(): Promise<void> {
 		await core.group('Trying to restore from cache', async () => {
 			this.didRestore = (await cache.restoreCache([this.cacheDirectory, this.productDirectory], this.cacheKey)) !== undefined

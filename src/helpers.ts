@@ -3,7 +3,7 @@ import * as os from 'os'
 import { v5 as _uuid } from 'uuid'
 
 export async function exec(commandLine: string, args?: string[]): Promise<string> {
-	let output: string = ''
+	let output = ''
 	await _exec(commandLine, args, {
 		listeners: {
 			stdout: (data: Buffer) => {
@@ -28,7 +28,7 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
 
 export async function supportedBuildOptions(argsToTest: string[]): Promise<string[]> {
 	const helpText = await exec('swift', ['build', '--help'])
-	let validArgs: string[] = []
+	const validArgs: string[] = []
 	for (const arg of argsToTest) {
 		const regex = RegExp(`(${arg})\\s`)
 		if (regex.test(helpText)) {

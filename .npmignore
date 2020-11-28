@@ -1,8 +1,8 @@
 # Add files/folders only used for the GitHub Action here
 __tests__
+.eslintrc.json
 .gitattributes
 .github
-.prettierrc.json
 action.yml
 dist
 jest.config.js

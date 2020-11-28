@@ -7,7 +7,7 @@ import { exec } from './helpers'
 
 export class SwiftEnvironmentFixer {
 	static async fixTar(): Promise<void> {
-		await core.group(`Ensuring gnu-tar is used`, async () => {
+		await core.group('Ensuring gnu-tar is used', async () => {
 			// https://github.com/Cyberbeni/install-swift-tool/issues/69
 			// https://formulae.brew.sh/formula/gnu-tar
 			// PATH="$(brew --prefix)/opt/gnu-tar/libexec/gnubin:$PATH"
