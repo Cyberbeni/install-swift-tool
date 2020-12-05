@@ -30,7 +30,6 @@ jobs:
       if: ${{ steps.changes.outputs.dist || github.event.inputs.force == 'true' }}
       uses: peter-evans/create-pull-request@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: "Update dependencies"
         branch: yarn-upgrade-latest
         delete-branch: true
