@@ -7,11 +7,11 @@ export async function exec(commandLine: string, args?: string[]): Promise<string
 	await _exec(commandLine, args, {
 		listeners: {
 			stdout: (data: Buffer) => {
-				output += data.toString().trim()
+				output += data.toString()
 			}
 		}
 	})
-	return output
+	return output.trim()
 }
 
 export async function getUuid(url: string, commitHash: string): Promise<string> {

@@ -109,16 +109,13 @@ export class SwiftToolInstaller {
 				for (const itemName of contents) {
 					const itemPath = `${this.productDirectory}/${itemName}`
 					try {
-						fs.accessSync(itemPath, fs.constants.X_OK)
-						if (fs.lstatSync(itemPath).isDirectory()) {
-							fs.rmdirSync(itemPath, { recursive: true })
-						}
-					} catch {
 						if (fs.lstatSync(itemPath).isDirectory()) {
 							fs.rmdirSync(itemPath, { recursive: true })
 						} else {
-							fs.unlinkSync(itemPath)
+							fs.accessSync(itemPath, fs.constants.X_OK)
 						}
+					} catch {
+						fs.unlinkSync(itemPath)
 					}
 				}
 			} catch (error) {
