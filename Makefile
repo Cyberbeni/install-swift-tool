@@ -1,5 +1,5 @@
-.PHONY: all
-all:
+.PHONY: build
+build:
 	yarn
 	npm run format
 	npm run build
@@ -16,3 +16,27 @@ test:
 once-mac:
 	brew reinstall npm
 	brew reinstall yarn
+ 
+ .PHONY: clean
+ clean:
+	rm -f tsconfig.tsbuildinfo
+	rm -rf dist
+	rm -rf lib
+	rm -rf types
+
+.PHONY: git-status
+git-status:
+	@status=$$(git status --porcelain); \
+	if [ ! -z "$${status}" ]; \
+	then \
+		echo "Error: Working directory is dirty."; \
+		exit 1; \
+	fi
+
+.PHONY: publish
+publish: clean build git-status
+	$$(sed -i '' -e 's/"version": "0.0.0",/"version": "${VERSION_TO_PUBLISH}",/g' package.json)
+	@echo ================================================================================
+	@echo Ready to publish version: ${VERSION_TO_PUBLISH}
+	@echo "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ]
+	npm publish
