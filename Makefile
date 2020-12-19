@@ -36,4 +36,4 @@ publish: clean build git-status
 	@echo ================================================================================
 	@echo "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ]
 	npm publish
-	git reset --hard
+	git reset HEAD --hard
