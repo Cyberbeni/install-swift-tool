@@ -14,12 +14,12 @@ jobs:
     - name: Run action without branch
       uses: ./
       with:
-        url: https://github.com/nicklockwood/SwiftFormat
+        url: https://github.com/thii/xcbeautify
     - name: Run action with branch
       uses: ./
       with:
-        url: https://github.com/Cyberbeni/xcbeautify
-        branch: linux-fixes
+        url: https://github.com/nicklockwood/SwiftFormat
+        branch: develop
     - name: Run action with version
       uses: ./
       with:
