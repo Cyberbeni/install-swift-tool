@@ -26,17 +26,13 @@ once-mac:
 
 .PHONY: git-status
 git-status:
-	@status=$$(git status --porcelain); \
-	if [ ! -z "$${status}" ]; \
-	then \
-		echo "Error: Working directory is dirty."; \
-		exit 1; \
-	fi
+	@status=$$(git status --porcelain)
+	@[ "${status}" ] || ( echo "Error: Working directory is dirty."; exit 1 )
 
 .PHONY: publish
 publish: clean build git-status
 	@version=$$(git tag --points-at HEAD | tr -d 'v')
-	@[ "${version}" ] || ( echo "Version tag not found."; exit 1 )
+	@[ "${version}" ] || ( echo "Error: Version tag not found."; exit 1 )
 	$$(sed -i '' -e 's/"version": "0.0.0",/"version": "${version}",/g' package.json)
 	@echo ================================================================================
 	git diff
