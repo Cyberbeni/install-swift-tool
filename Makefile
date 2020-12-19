@@ -26,8 +26,7 @@ once-mac:
 
 .PHONY: git-status
 git-status:
-	@status=$$(git status --porcelain)
-	@[ "${status}" = "" ] || ( echo "Error: Working directory is dirty."; exit 1 )
+	@[ "$$(git status --porcelain)" = "" ] || ( echo "Error: Working directory is dirty."; exit 1 )
 
 .PHONY: publish
 publish: clean build git-status
