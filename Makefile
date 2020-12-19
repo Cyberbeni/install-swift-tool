@@ -34,7 +34,7 @@ publish: clean build git-status
 	@[ "${version}" ] || ( echo "Error: Version tag not found."; exit 1 )
 	$$(sed -i '' -e 's/"version": "0.0.0",/"version": "${version}",/g' package.json)
 	@echo ================================================================================
-	git diff
+	git --no-pager diff
 	@echo ================================================================================
 	@echo "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ]
 	npm publish
