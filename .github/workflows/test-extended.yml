@@ -5,9 +5,12 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    paths:
+      - '.github/workflows/test-extended.yml'
 
 jobs:
-  test:
+  swift-format:
     runs-on: ubuntu-latest
     container:
       image: swift:5.3
@@ -19,7 +22,25 @@ jobs:
       with:
         url: https://github.com/apple/swift-format
         version: '^0.50300.0'
-    - name: Test tools in path
+    - name: Test tool in path
       run: |
         echo "class Test {}" > ./test.swift
         swift-format ./test.swift
+
+  sourcery:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run action with version
+      uses: ./
+      with:
+        url: https://github.com/krzysztofzablocki/Sourcery
+        version: '*'
+    - name: Test tool in path
+      run: |
+        echo "class TestInput {}" > ./input.swift
+        echo "{% for type in types.all %}{{ type.name }}{% endfor %}" > ./template.stencil
+        sourcery --disableCache --sources ./input.swift --templates ./template.stencil --output ./result.swift
+        test -f ./result.swift
+        test -n "$(grep "TestInput" < ./result.swift)"
