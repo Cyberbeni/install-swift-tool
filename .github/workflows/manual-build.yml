@@ -11,6 +11,4 @@ jobs:
     - name: Build
       run: make
     - name: Commit
-      uses: EndBug/add-and-commit@v5
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: EndBug/add-and-commit@v6

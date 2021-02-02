@@ -17,7 +17,7 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "max-len": ["warn", { "code": 200 }],
+    "max-len": ["warn", { "code": 140 }],
     "indent": ["warn", "tab"],
     "quotes": ["warn", "single"],
     "semi": ["warn", "never"],
