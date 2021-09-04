@@ -4,7 +4,7 @@ import * as fs from 'fs'
 import * as os from 'os'
 import * as semver from 'semver'
 
-import { exec, getUuid, supportedBuildOptions } from './helpers'
+import { exec, getUuid, logError, supportedBuildOptions } from './helpers'
 
 export class SwiftToolInstaller {
 	// Input
@@ -119,7 +119,7 @@ export class SwiftToolInstaller {
 					}
 				}
 			} catch (error) {
-				core.info(error.message)
+				logError(error)
 			}
 		})
 	}
@@ -129,7 +129,7 @@ export class SwiftToolInstaller {
 			try {
 				await cache.saveCache([this.cacheDirectory, this.productDirectory], this.cacheKey)
 			} catch (error) {
-				core.info(error.message)
+				logError(error)
 			}
 		})
 	}

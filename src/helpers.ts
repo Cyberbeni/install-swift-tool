@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import { exec as _exec } from '@actions/exec'
 import * as os from 'os'
 import { v5 as _uuid } from 'uuid'
@@ -24,6 +25,14 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
 		additionalInfo = `${osVersion}-${os.arch()}-${swiftVersion}`
 	}
 	return _uuid(`${url}-${commitHash}-${additionalInfo}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
+}
+
+export function logError(error: unknown): void {
+	if (error instanceof Error) {
+		core.info(error.message)
+	} else {
+		core.info(`Unexpected error type: '${typeof error}'`)
+	}
 }
 
 export async function supportedBuildOptions(argsToTest: string[]): Promise<string[]> {
