@@ -14,7 +14,7 @@ jobs:
     - name: Run action without branch
       uses: ./
       with:
-        url: https://github.com/thii/xcbeautify
+        url: https://github.com/tuist/xcbeautify
     - name: Run action with branch
       uses: ./
       with:
