@@ -39,7 +39,7 @@ jobs:
       uses: ./
       with:
         url: https://github.com/liamnichols/Sourcery
-        version: 'ln/static-lib_internalSwiftSyntaxParser'
+        branch: 'ln/static-lib_internalSwiftSyntaxParser'
     - name: Test tool in path
       run: |
         echo "class TestInput {}" > ./input.swift
