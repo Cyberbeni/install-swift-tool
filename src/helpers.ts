@@ -34,15 +34,3 @@ export function logError(error: unknown): void {
 		core.info(`Unexpected error type: '${typeof error}'`)
 	}
 }
-
-export async function supportedBuildOptions(argsToTest: string[]): Promise<string[]> {
-	const helpText = await exec('swift', ['build', '--help'])
-	const validArgs: string[] = []
-	for (const arg of argsToTest) {
-		const regex = RegExp(`(${arg})\\s`)
-		if (regex.test(helpText)) {
-			validArgs.push(arg)
-		}
-	}
-	return validArgs
-}
