@@ -38,8 +38,8 @@ jobs:
     - name: Run action with version
       uses: ./
       with:
-        url: https://github.com/krzysztofzablocki/Sourcery
-        version: '1.5.0'
+        url: https://github.com/liamnichols/Sourcery
+        version: 'ln/static-lib_internalSwiftSyntaxParser'
     - name: Test tool in path
       run: |
         echo "class TestInput {}" > ./input.swift
