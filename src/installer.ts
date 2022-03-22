@@ -110,7 +110,7 @@ export class SwiftToolInstaller {
 					const itemPath = `${this.productDirectory}/${itemName}`
 					try {
 						if (fs.lstatSync(itemPath).isDirectory()) {
-							fs.rmdirSync(itemPath, { recursive: true })
+							fs.rmSync(itemPath, { recursive: true })
 						} else {
 							fs.accessSync(itemPath, fs.constants.X_OK)
 						}
