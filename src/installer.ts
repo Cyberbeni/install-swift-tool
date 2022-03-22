@@ -4,7 +4,7 @@ import * as fs from 'fs'
 import * as os from 'os'
 import * as semver from 'semver'
 
-import { exec, getUuid, logError, supportedBuildOptions } from './helpers'
+import { exec, getUuid, logError } from './helpers'
 
 export class SwiftToolInstaller {
 	// Input
@@ -97,8 +97,7 @@ export class SwiftToolInstaller {
 			// They didn't make any difference when building SwiftLint
 			// '--disable-automatic-resolution' caused build error on Linux for realm/SwiftLint@0.40.3:
 			//    'cannot update Package.resolved file because automatic resolution is disabled'
-			const additionalOptions = await supportedBuildOptions(['--disable-sandbox'])
-			await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release'].concat(additionalOptions))
+			await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release', '--disable-sandbox'])
 		})
 	}
 
