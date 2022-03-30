@@ -13,7 +13,7 @@ jobs:
   swift-format:
     runs-on: ubuntu-latest
     container:
-      image: swift:5.3
+      image: swift:5.6
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -21,25 +21,28 @@ jobs:
       uses: ./
       with:
         url: https://github.com/apple/swift-format
-        version: '^0.50300.0'
+        version: '^0.50600.0'
     - name: Test tool in path
       run: |
         echo "class Test {}" > ./test.swift
         swift-format ./test.swift
 
   sourcery:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
     - name: Checkout
       uses: actions/checkout@v2
     - uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: '12.5'
+        xcode-version: '13.3'
     - name: Run action with version
       uses: ./
       with:
         url: https://github.com/krzysztofzablocki/Sourcery
-        version: '1.5.0'
+        version: '*'
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '13.2'
     - name: Test tool in path
       run: |
         echo "class TestInput {}" > ./input.swift
