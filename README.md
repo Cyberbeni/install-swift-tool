@@ -42,6 +42,7 @@ jobs:
       uses: Cyberbeni/install-swift-tool@v2
       with:
         url: https://github.com/nicklockwood/SwiftFormat
+        version: '*' # https://devhints.io/semver
     - name: Lint
       run: swiftformat --lint .
 ```
