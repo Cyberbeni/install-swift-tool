@@ -1,15 +1,5 @@
-# Add files/folders only used for the GitHub Action here
-__tests__
-.eslintrc.json
-.gitattributes
-.github
-action.yml
-dist
-jest.config.js
+**
+!lib/**
 lib/main.js
+!types/**
 types/main.d.ts
-Makefile
-README.md
-src
-tsconfig.json
-tsconfig.tsbuildinfo
