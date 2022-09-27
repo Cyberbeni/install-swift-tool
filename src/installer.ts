@@ -10,12 +10,14 @@ export class SwiftToolInstaller {
 	// Input
 
 	readonly url: string
+	readonly commit: string
 	branch: string
 	readonly version: string
 	readonly useCache: boolean
 
-	private constructor(url: string, branch: string, version: string, useCache: boolean) {
+	private constructor(url: string, commit: string, branch: string, version: string, useCache: boolean) {
 		this.url = url
+		this.commit = commit
 		this.branch = branch
 		this.version = version
 		this.useCache = useCache
@@ -53,7 +55,12 @@ export class SwiftToolInstaller {
 	async createWorkingDirectory(): Promise<void> {
 		await core.group('Creating working directory', async () => {
 			let commitHash = ''
-			if (this.branch) {
+			if (this.commit) {
+				if (this.commit.length != 40) {
+					throw Error('`commit` should be 40 characters if specified.')
+				}
+				commitHash = this.commit
+			} else if (this.branch) {
 				commitHash = await exec('git', ['ls-remote', '-ht', this.url, `refs/heads/${this.branch}`, `refs/tags/${this.branch}`])
 			} else {
 				commitHash = await exec('git', ['ls-remote', this.url, 'HEAD'])
@@ -73,20 +80,27 @@ export class SwiftToolInstaller {
 
 	async cloneGit(): Promise<void> {
 		await core.group('Cloning repo', async () => {
-			if (this.branch) {
-				await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url, this.workingDirectory])
+			if (this.commit) {
+				await exec('git', ['-C', this.workingDirectory, 'init'])
+				await exec('git', ['-C', this.workingDirectory, 'remote', 'add', 'origin', this.url])
+				await exec('git', ['-C', this.workingDirectory, 'fetch', '--depth', '1', 'origin', this.commit])
+				await exec('git', ['-C', this.workingDirectory, 'checkout', 'FETCH_HEAD'])
 			} else {
-				await exec('git', ['clone', '--depth', '1', this.url, this.workingDirectory])
-			}
-			// `git rev-parse HEAD` gave different result than `git ls-remote -ht ...`
-			// when used with an annotated tag: https://stackoverflow.com/a/15472310
-			// This seems to print the same hash(es) but only if `git clone` used `--depth 1`
-			const commitHash = (await exec('git', ['-C', this.workingDirectory, 'show-ref', '-s'])).split('\n').pop() ?? ''
-			const newUuid = await getUuid(this.url, commitHash)
-			if (this.uuid != newUuid) {
-				const oldWorkingDirectory = this.workingDirectory
-				this.updateDirectoryNames(newUuid)
-				await exec('mv', [oldWorkingDirectory, this.workingDirectory])
+				if (this.branch) {
+					await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url, this.workingDirectory])
+				} else {
+					await exec('git', ['clone', '--depth', '1', this.url, this.workingDirectory])
+				}
+				// `git rev-parse HEAD` gave different result than `git ls-remote -ht ...`
+				// when used with an annotated tag: https://stackoverflow.com/a/15472310
+				// This seems to print the same hash(es) but only if `git clone` used `--depth 1`
+				const commitHash = (await exec('git', ['-C', this.workingDirectory, 'show-ref', '-s'])).split('\n').pop() ?? ''
+				const newUuid = await getUuid(this.url, commitHash)
+				if (this.uuid != newUuid) {
+					const oldWorkingDirectory = this.workingDirectory
+					this.updateDirectoryNames(newUuid)
+					await exec('mv', [oldWorkingDirectory, this.workingDirectory])
+				}
 			}
 		})
 	}
@@ -160,8 +174,8 @@ export class SwiftToolInstaller {
 		await this.exportPath()
 	}
 
-	static async install(url: string, branch = '', version = '', useCache = true): Promise<void> {
-		const installer = new SwiftToolInstaller(url, branch, version, useCache)
+	static async install(url: string, commit = '', branch = '', version = '', useCache = true): Promise<void> {
+		const installer = new SwiftToolInstaller(url, commit, branch, version, useCache)
 		await installer.install()
 	}
 }

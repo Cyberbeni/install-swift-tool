@@ -8,7 +8,7 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 
 `v1` - Initial version. Deprecated, use `v2` with `use-cache: false` instead.
 
-`v2` - Adds caching (enabled by default), allows specifying `version`.
+`v2` - Adds caching (enabled by default), allows specifying `commit` or `version`.
 
 ## Usage
 
@@ -18,8 +18,9 @@ Step example:
   uses: Cyberbeni/install-swift-tool@v2
   with:
     url: https://github.com/Cyberbeni/xcbeautify
-    branch: linux-fixes # optional, branch or tag
-    version: '*' # optional, overrides branch, format: https://devhints.io/semver
+    commit: '40fa00f879ec5823a7362cbb8ca0cd06abafde61' # optional, commit hash
+    branch: linux-fixes # optional, branch or tag, overridden by commit
+    version: '*' # optional, overridden by commit/branch, format: https://devhints.io/semver
     use-cache: true # optinal, default: true
 ```
 
@@ -51,7 +52,7 @@ GitHub Action example:
 ```tsx
 import { SwiftToolInstaller } from 'install-swift-tool'
 
-await SwiftToolInstaller.install(url, branch, version, useCache)
+await SwiftToolInstaller.install(url, commit, branch, version, useCache)
 ```
 
 ## How to contribute

@@ -25,9 +25,15 @@ jobs:
       with:
         url: https://github.com/realm/SwiftLint
         version: '*'
+    - name: Run action with commit hash
+      uses: ./
+      with:
+        url: https://github.com/wvteijlingen/localize-xibs
+        commit: '73ae709f7bc235d5edf2a90b9c9fa3e5ef037781'
     - name: Test tools in path
       run: |
         echo "class Test {}" > ./test.swift
         swiftformat --lint ./test.swift
         xcbeautify --version
         swiftlint lint ./test.swift
+        localize-xibs --help
