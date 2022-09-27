@@ -81,19 +81,19 @@ export class SwiftToolInstaller {
 	async cloneGit(): Promise<void> {
 		await core.group('Cloning repo', async () => {
 			if (this.commit) {
-				await exec('git', ['init', this.workingDirectory])
-				await exec('git', ['remote', 'add', 'origin', this.url, this.workingDirectory])
-				await exec('git', ['fetch', '--depth', '1', 'origin', this.commit, this.workingDirectory])
-				await exec('git', ['checkout', 'FETCH_HEAD', this.workingDirectory])
+				await exec('git', ['init'], this.workingDirectory)
+				await exec('git', ['remote', 'add', 'origin', this.url], this.workingDirectory)
+				await exec('git', ['fetch', '--depth', '1', 'origin', this.commit], this.workingDirectory)
+				await exec('git', ['checkout', 'FETCH_HEAD'], this.workingDirectory)
 			} else if (this.branch) {
-				await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url, this.workingDirectory])
+				await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url], this.workingDirectory)
 			} else {
-				await exec('git', ['clone', '--depth', '1', this.url, this.workingDirectory])
+				await exec('git', ['clone', '--depth', '1', this.url], this.workingDirectory)
 			}
 			// `git rev-parse HEAD` gave different result than `git ls-remote -ht ...`
 			// when used with an annotated tag: https://stackoverflow.com/a/15472310
 			// This seems to print the same hash(es) but only if `git clone` used `--depth 1`
-			const commitHash = (await exec('git', ['-C', this.workingDirectory, 'show-ref', '-s'])).split('\n').pop() ?? ''
+			const commitHash = (await exec('git', ['show-ref', '-s'], this.workingDirectory)).split('\n').pop() ?? ''
 			const newUuid = await getUuid(this.url, commitHash)
 			if (this.uuid != newUuid) {
 				const oldWorkingDirectory = this.workingDirectory
@@ -109,7 +109,7 @@ export class SwiftToolInstaller {
 			// They didn't make any difference when building SwiftLint
 			// '--disable-automatic-resolution' caused build error on Linux for realm/SwiftLint@0.40.3:
 			//    'cannot update Package.resolved file because automatic resolution is disabled'
-			await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release', '--disable-sandbox'])
+			await exec('swift', ['build', '--configuration', 'release', '--disable-sandbox'], this.workingDirectory)
 		})
 	}
 
