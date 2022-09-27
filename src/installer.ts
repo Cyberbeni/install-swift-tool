@@ -10,12 +10,14 @@ export class SwiftToolInstaller {
 	// Input
 
 	readonly url: string
+	commit: string
 	branch: string
 	readonly version: string
 	readonly useCache: boolean
 
-	private constructor(url: string, branch: string, version: string, useCache: boolean) {
+	private constructor(url: string, commit: string, branch: string, version: string, useCache: boolean) {
 		this.url = url
+		this.commit = commit
 		this.branch = branch
 		this.version = version
 		this.useCache = useCache
@@ -53,7 +55,12 @@ export class SwiftToolInstaller {
 	async createWorkingDirectory(): Promise<void> {
 		await core.group('Creating working directory', async () => {
 			let commitHash = ''
-			if (this.branch) {
+			if (this.commit) {
+				if (this.commit.length != 40) {
+					throw Error('`commit` should be 40 characters if specified.')
+				}
+				commitHash = this.commit
+			} else if (this.branch) {
 				commitHash = await exec('git', ['ls-remote', '-ht', this.url, `refs/heads/${this.branch}`, `refs/tags/${this.branch}`])
 			} else {
 				commitHash = await exec('git', ['ls-remote', this.url, 'HEAD'])
@@ -73,7 +80,12 @@ export class SwiftToolInstaller {
 
 	async cloneGit(): Promise<void> {
 		await core.group('Cloning repo', async () => {
-			if (this.branch) {
+			if (this.commit) {
+				await exec('git', ['init', this.workingDirectory])
+				await exec('git', ['remote', 'add', 'origin', this.url, this.workingDirectory])
+				await exec('git', ['fetch', '--depth', '1', 'origin', this.commit, this.workingDirectory])
+				await exec('git', ['checkout', 'FETCH_HEAD', this.workingDirectory])
+			} else if (this.branch) {
 				await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url, this.workingDirectory])
 			} else {
 				await exec('git', ['clone', '--depth', '1', this.url, this.workingDirectory])
@@ -160,8 +172,8 @@ export class SwiftToolInstaller {
 		await this.exportPath()
 	}
 
-	static async install(url: string, branch = '', version = '', useCache = true): Promise<void> {
-		const installer = new SwiftToolInstaller(url, branch, version, useCache)
+	static async install(url: string, commit = '', branch = '', version = '', useCache = true): Promise<void> {
+		const installer = new SwiftToolInstaller(url, commit, branch, version, useCache)
 		await installer.install()
 	}
 }

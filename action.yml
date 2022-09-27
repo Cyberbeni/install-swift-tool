@@ -8,11 +8,14 @@ inputs:
   url:
     description: 'Git URL of the tool to build'
     required: true
+  commit:
+    description: 'Git commit hash to clone'
+    required: false
   branch:
-    description: 'Git branch/tag to clone'
+    description: 'Git branch/tag to clone, overridden by commit'
     required: false
   version:
-    description: 'Version range to choose max satisfying version by, overrides branch, format: https://devhints.io/semver'
+    description: 'Version range to choose max satisfying version by, overridden by commit/branch, format: https://devhints.io/semver'
     required: false
   use-cache:
     description: 'Use cache to restore/save build product'

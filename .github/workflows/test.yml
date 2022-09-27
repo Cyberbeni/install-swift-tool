@@ -25,9 +25,15 @@ jobs:
       with:
         url: https://github.com/realm/SwiftLint
         version: '*'
+    - name: Run action with commit hash
+      uses: ./
+      with:
+        url: https://github.com/mono0926/LicensePlist
+        commit: '40fa00f879ec5823a7362cbb8ca0cd06abafde61'
     - name: Test tools in path
       run: |
         echo "class Test {}" > ./test.swift
         swiftformat --lint ./test.swift
         xcbeautify --version
         swiftlint lint ./test.swift
+        license-plist --help
