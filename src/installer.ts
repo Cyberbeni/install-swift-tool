@@ -10,7 +10,7 @@ export class SwiftToolInstaller {
 	// Input
 
 	readonly url: string
-	commit: string
+	readonly commit: string
 	branch: string
 	readonly version: string
 	readonly useCache: boolean
