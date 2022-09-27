@@ -19,8 +19,8 @@ Step example:
   with:
     url: https://github.com/Cyberbeni/xcbeautify
     commit: '40fa00f879ec5823a7362cbb8ca0cd06abafde61' # optional, commit hash
-    branch: linux-fixes # optional, branch or tag, overridden by commit
-    version: '*' # optional, overridden by commit/branch, format: https://devhints.io/semver
+    branch: linux-fixes # optional, branch or tag, overridden by commit/version
+    version: '*' # optional, overridden by commit, format: https://devhints.io/semver
     use-cache: true # optinal, default: true
 ```
 
