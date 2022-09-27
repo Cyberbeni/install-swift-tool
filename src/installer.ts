@@ -85,20 +85,22 @@ export class SwiftToolInstaller {
 				await exec('git', ['-C', this.workingDirectory, 'remote', 'add', 'origin', this.url])
 				await exec('git', ['-C', this.workingDirectory, 'fetch', '--depth', '1', 'origin', this.commit])
 				await exec('git', ['-C', this.workingDirectory, 'checkout', 'FETCH_HEAD'])
-			} else if (this.branch) {
-				await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url, this.workingDirectory])
 			} else {
-				await exec('git', ['clone', '--depth', '1', this.url, this.workingDirectory])
-			}
-			// `git rev-parse HEAD` gave different result than `git ls-remote -ht ...`
-			// when used with an annotated tag: https://stackoverflow.com/a/15472310
-			// This seems to print the same hash(es) but only if `git clone` used `--depth 1`
-			const commitHash = (await exec('git', ['-C', this.workingDirectory, 'show-ref', '-s'])).split('\n').pop() ?? ''
-			const newUuid = await getUuid(this.url, commitHash)
-			if (this.uuid != newUuid) {
-				const oldWorkingDirectory = this.workingDirectory
-				this.updateDirectoryNames(newUuid)
-				await exec('mv', [oldWorkingDirectory, this.workingDirectory])
+				if (this.branch) {
+					await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url, this.workingDirectory])
+				} else {
+					await exec('git', ['clone', '--depth', '1', this.url, this.workingDirectory])
+				}
+				// `git rev-parse HEAD` gave different result than `git ls-remote -ht ...`
+				// when used with an annotated tag: https://stackoverflow.com/a/15472310
+				// This seems to print the same hash(es) but only if `git clone` used `--depth 1`
+				const commitHash = (await exec('git', ['-C', this.workingDirectory, 'show-ref', '-s'])).split('\n').pop() ?? ''
+				const newUuid = await getUuid(this.url, commitHash)
+				if (this.uuid != newUuid) {
+					const oldWorkingDirectory = this.workingDirectory
+					this.updateDirectoryNames(newUuid)
+					await exec('mv', [oldWorkingDirectory, this.workingDirectory])
+				}
 			}
 		})
 	}
