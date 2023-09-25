@@ -13,7 +13,7 @@ jobs:
   swift-format:
     runs-on: ubuntu-latest
     container:
-      image: swift:5.6
+      image: swift:5.8
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -21,14 +21,14 @@ jobs:
       uses: ./
       with:
         url: https://github.com/apple/swift-format
-        version: '^0.50600.0'
+        version: '^508.0.1'
     - name: Test tool in path
       run: |
         echo "class Test {}" > ./test.swift
         swift-format ./test.swift
 
   sourcery:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
     - name: Checkout
       uses: actions/checkout@v3
