@@ -17,7 +17,7 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 Step example:
 ```yaml
 - name: Install xcbeautify
-  uses: Cyberbeni/install-swift-tool@v2
+  uses: Cyberbeni/install-swift-tool@v3
   with:
     url: https://github.com/Cyberbeni/xcbeautify
     commit: '40fa00f879ec5823a7362cbb8ca0cd06abafde61' # optional, commit hash
@@ -40,12 +40,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Install SwiftFormat
-      uses: Cyberbeni/install-swift-tool@v2
+      uses: Cyberbeni/install-swift-tool@v3
       with:
         url: https://github.com/nicklockwood/SwiftFormat
-        version: '*' # https://devhints.io/semver
     - name: Lint
       run: swiftformat --lint .
 ```
