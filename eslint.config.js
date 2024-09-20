@@ -25,6 +25,7 @@ module.exports = [
 		"plugins": [
 		  "@typescript-eslint"
 		],
+		"ignorePatterns": ["**/vendor/**/*.ts"],
 		"rules": {
 		  "max-len": ["warn", { "code": 140 }],
 		  "indent": ["warn", "tab"],
