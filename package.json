@@ -8,8 +8,8 @@
     "url": "github:Cyberbeni/install-swift-tool.git"
   },
   "scripts": {
-    "format": "eslint --max-warnings=0 --fix src/**/*.ts",
-    "lint": "eslint src/**/*.ts",
+    "format": "eslint --max-warnings=0 --no-warn-ignored --fix src/**/*.ts",
+    "lint": "eslint --no-warn-ignored src/**/*.ts",
     "build": "tsc",
     "package": "ncc build --minify --out dist ./lib/main.js",
     "test": "jest"

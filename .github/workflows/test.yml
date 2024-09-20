@@ -11,15 +11,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Run action without branch
-      uses: ./
-      with:
-        url: https://github.com/cpisciotta/xcbeautify
     - name: Run action with branch
       uses: ./
       with:
+        url: https://github.com/cpisciotta/xcbeautify
+        branch: main
+    - name: Run action with Package.resolved
+      uses: ./
+      with:
         url: https://github.com/nicklockwood/SwiftFormat
-        branch: develop
     - name: Run action with version
       uses: ./
       with:
