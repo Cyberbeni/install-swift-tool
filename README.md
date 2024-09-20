@@ -10,6 +10,8 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 
 `v2` - Adds caching (enabled by default), allows specifying `commit` or `version`.
 
+`v3` (unreleased) - Uses the `Package.resolved` file if no commit/branch/version is specified.
+
 ## Usage
 
 Step example:
