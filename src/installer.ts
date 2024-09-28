@@ -5,12 +5,13 @@ import * as os from 'os'
 import * as semver from 'semver'
 
 import { exec, getUuid, logError } from './helpers'
+import { PackageResolved } from './vendor/SwiftPackage'
 
 export class SwiftToolInstaller {
 	// Input
 
 	readonly url: string
-	readonly commit: string
+	commit: string
 	branch: string
 	readonly version: string
 	readonly useCache: boolean
@@ -40,6 +41,22 @@ export class SwiftToolInstaller {
 		})
 	}
 
+	parsePackageResolved(): string {
+		const resolvedFile = 'Package.resolved'
+		if (fs.existsSync(resolvedFile)) {
+			const fileContents = fs.readFileSync(resolvedFile, { encoding: 'utf8' })
+			const parsedContents = new PackageResolved(fileContents)
+			for (const entry of parsedContents.pins) {
+				if (entry.location == this.url) {
+					return entry.state.revision
+				}
+			}
+			throw Error(`Package.resolved file doesn't contain '${this.url}'`)
+		} else {
+			throw Error('Package.resolved file not found')
+		}
+	}
+
 	uuid = ''
 	cacheKey = ''
 	workingDirectory = ''
@@ -54,19 +71,17 @@ export class SwiftToolInstaller {
 	}
 	async createWorkingDirectory(): Promise<void> {
 		await core.group('Creating working directory', async () => {
-			let commitHash = ''
 			if (this.commit) {
 				if (this.commit.length != 40) {
 					throw Error('`commit` should be 40 characters if specified.')
 				}
-				commitHash = this.commit
 			} else if (this.branch) {
-				commitHash = await exec('git', ['ls-remote', '-ht', this.url, `refs/heads/${this.branch}`, `refs/tags/${this.branch}`])
+				this.commit = (await exec('git', ['ls-remote', '-ht', this.url, `refs/heads/${this.branch}`, `refs/tags/${this.branch}`]))
+					.substring(0, 40)
 			} else {
-				commitHash = await exec('git', ['ls-remote', this.url, 'HEAD'])
+				this.commit = this.parsePackageResolved()
 			}
-			commitHash = commitHash.substring(0, 40)
-			this.updateDirectoryNames(await getUuid(this.url, commitHash))
+			this.updateDirectoryNames(await getUuid(this.url, this.commit))
 			await exec('mkdir', ['-p', this.workingDirectory])
 		})
 	}
@@ -86,21 +101,7 @@ export class SwiftToolInstaller {
 				await exec('git', ['-C', this.workingDirectory, 'fetch', '--depth', '1', 'origin', this.commit])
 				await exec('git', ['-C', this.workingDirectory, 'checkout', 'FETCH_HEAD'])
 			} else {
-				if (this.branch) {
-					await exec('git', ['clone', '--depth', '1', '--branch', this.branch, this.url, this.workingDirectory])
-				} else {
-					await exec('git', ['clone', '--depth', '1', this.url, this.workingDirectory])
-				}
-				// `git rev-parse HEAD` gave different result than `git ls-remote -ht ...`
-				// when used with an annotated tag: https://stackoverflow.com/a/15472310
-				// This seems to print the same hash(es) but only if `git clone` used `--depth 1`
-				const commitHash = (await exec('git', ['-C', this.workingDirectory, 'show-ref', '-s'])).split('\n').pop() ?? ''
-				const newUuid = await getUuid(this.url, commitHash)
-				if (this.uuid != newUuid) {
-					const oldWorkingDirectory = this.workingDirectory
-					this.updateDirectoryNames(newUuid)
-					await exec('mv', [oldWorkingDirectory, this.workingDirectory])
-				}
+				throw Error('`commit` should be known at the time of `git clone`. (Either by input or by calculations.)')
 			}
 		})
 	}

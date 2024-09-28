@@ -9,7 +9,7 @@ inputs:
     description: 'Git URL of the tool to build'
     required: true
   commit:
-    description: 'Git commit hash to clone'
+    description: 'Git commit hash to clone, will be read from Package.resolved if no commit/branch/version is specified'
     required: false
   branch:
     description: 'Git branch/tag to clone, overridden by commit'
