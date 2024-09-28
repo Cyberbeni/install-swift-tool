@@ -8,9 +8,9 @@ Github action to install swift based tools, like `xcbeautify` or `swiftformat`, 
 
 `v1` - Initial version. Deprecated, use `v2` with `use-cache: false` instead.
 
-`v2` - Adds caching (enabled by default), allows specifying `commit` or `version`.
+`v2` - Adds caching (enabled by default), allows specifying `commit` or `version`. Deprecated, use `v3`, set branch manually if you want to use the default branch and set `LINUX_SOURCEKIT_LIB_PATH` manually if needed (not needed with the official runner images for more than 2 years).
 
-`v3` (unreleased) - Uses the `Package.resolved` file if no commit/branch/version is specified.
+`v3` - Uses the `Package.resolved` file if no commit/branch/version is specified.
 
 ## Usage
 
@@ -19,9 +19,10 @@ Step example:
 - name: Install xcbeautify
   uses: Cyberbeni/install-swift-tool@v3
   with:
-    url: https://github.com/Cyberbeni/xcbeautify
-    commit: '40fa00f879ec5823a7362cbb8ca0cd06abafde61' # optional, commit hash
-    branch: linux-fixes # optional, branch or tag, overridden by commit/version
+    url: https://github.com/nicklockwood/SwiftFormat
+    # Version from Package.resolved is used if no commit/branch/version is provided.
+    commit: '175df295d77b5bf255b0c160d380cabbe826ded4' # optional, commit hash
+    branch: develop # optional, branch or tag, overridden by commit/version
     version: '*' # optional, overridden by commit, format: https://devhints.io/semver
     use-cache: true # optinal, default: true
 ```
@@ -47,13 +48,6 @@ jobs:
         url: https://github.com/nicklockwood/SwiftFormat
     - name: Lint
       run: swiftformat --lint .
-```
-
-GitHub Action example:
-```tsx
-import { SwiftToolInstaller } from 'install-swift-tool'
-
-await SwiftToolInstaller.install(url, commit, branch, version, useCache)
 ```
 
 ## How to contribute
