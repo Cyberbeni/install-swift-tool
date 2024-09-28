@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import { SwiftEnvironmentFixer } from './environment_fixer'
 import { SwiftToolInstaller } from './installer'
 
 async function main(): Promise<void> {
@@ -12,7 +11,6 @@ async function main(): Promise<void> {
 
 	// Run
 	await SwiftToolInstaller.install(url, commit, branch, version, useCache)
-	await SwiftEnvironmentFixer.fixAll()
 }
 
 main().catch(error => {
