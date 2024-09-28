@@ -24,7 +24,7 @@ jobs:
       id: changes
       run: |
         if [[ $(git status --porcelain ./dist) != "" ]]; then
-          echo "::set-output name=dist::true"
+          echo "dist=true" >> $GITHUB_OUTPUT
         fi
     - name: Create Pull Request
       if: ${{ steps.changes.outputs.dist || github.event.inputs.force == 'true' }}
