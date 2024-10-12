@@ -157,22 +157,31 @@ export class SwiftToolInstaller {
 	// Run
 
 	async install(): Promise<void> {
+		core.info(`Time 1: ${new Date()}`)
 		if (this.version) {
 			await this.resolveVersion()
+			core.info(`Time 2: ${new Date()}`)
 		}
 		await this.createWorkingDirectory()
+		core.info(`Time 3: ${new Date()}`)
 		if (this.useCache) {
 			await this.tryToRestore()
+			core.info(`Time 4: ${new Date()}`)
 		}
 		if (!this.didRestore) {
 			await this.cloneGit()
+			core.info(`Time 5: ${new Date()}`)
 			await this.buildTool()
+			core.info(`Time 6: ${new Date()}`)
 			if (this.useCache) {
 				await this.tryToCleanupIntermediateBuildProducts()
+				core.info(`Time 7: ${new Date()}`)
 				await this.tryToCache()
+				core.info(`Time 8: ${new Date()}`)
 			}
 		}
 		await this.exportPath()
+		core.info(`Time 9: ${new Date()}`)
 	}
 
 	static async install(url: string, commit = '', branch = '', version = '', useCache = true): Promise<void> {
