@@ -71,6 +71,7 @@ export class SwiftToolInstaller {
 	}
 	async createWorkingDirectory(): Promise<void> {
 		await core.group('Creating working directory', async () => {
+			core.info(`Time A: ${new Date()}`)
 			if (this.commit) {
 				if (this.commit.length != 40) {
 					throw Error('`commit` should be 40 characters if specified.')
@@ -81,8 +82,11 @@ export class SwiftToolInstaller {
 			} else {
 				this.commit = this.parsePackageResolved()
 			}
+			core.info(`Time B: ${new Date()}`)
 			this.updateDirectoryNames(await getUuid(this.url, this.commit))
+			core.info(`Time C: ${new Date()}`)
 			await exec('mkdir', ['-p', this.workingDirectory])
+			core.info(`Time D: ${new Date()}`)
 		})
 	}
 
