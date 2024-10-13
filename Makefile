@@ -3,14 +3,12 @@ build:
 	yarn
 	npm run format
 	npm run build
-	npm run package
 
 .PHONY: test
 test:
 	yarn
 	npm run lint
-	npm run build
-	npm test
+	npm run test
 
 .PHONY: once-mac
 once-mac:
@@ -21,8 +19,6 @@ once-mac:
  clean:
 	rm -f tsconfig.tsbuildinfo
 	rm -rf dist
-	rm -rf lib
-	rm -rf types
 
 .PHONY: git-status
 git-status:

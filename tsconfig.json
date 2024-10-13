@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
     // Build:
-    "incremental": true,
+    "incremental": false,
     "target": "es6",
     "module": "commonjs",
-    "outDir": "./lib",
     "rootDir": "./src",
     "esModuleInterop": true,
-    "declaration": true,
-    "declarationDir": "./types",
+    "declaration": false,
 
     // Lint:
     "strict": true,
@@ -18,5 +16,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "exclude": ["node_modules", "**/*.test.ts", "types"]
+  "exclude": ["node_modules", "**/*.test.ts"]
 }
