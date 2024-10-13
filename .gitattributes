@@ -1,1 +1,2 @@
-dist/* linguist-generated
+dist/** linguist-generated
+src/vendor/** linguist-vendored
