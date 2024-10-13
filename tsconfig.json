@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
+    // https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
     // Build:
     "incremental": false,
-    "target": "es6",
-    "module": "commonjs",
+    "lib": ["es2023"],
+    "module": "node16",
+    "target": "es2022",
     "rootDir": "./src",
     "esModuleInterop": true,
     "declaration": false,
