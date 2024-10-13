@@ -1,15 +1,7 @@
-name: "Additional PR checks"
+name: "PR checks"
 
 on: pull_request
 
 jobs:
-  ensure-built:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Ensure Built
-      run: |
-        make
-        git status
-        [[ -z $(git status --porcelain) ]] || exit 1
+  npm-pr-checks:
+    uses: Cyberbeni/workflows/.github/workflows/npm-pr-checks.yml@master
