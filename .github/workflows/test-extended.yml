@@ -12,6 +12,8 @@ on:
 jobs:
   swift-format:
     runs-on: ubuntu-latest
+    container:
+      image: swift:5.8
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -19,7 +21,7 @@ jobs:
       uses: ./
       with:
         url: https://github.com/apple/swift-format
-        version: '*'
+        version: '^508.0.1'
     - name: Test tool in path
       run: |
         echo "class Test {}" > ./test.swift
