@@ -16,7 +16,7 @@ export class SwiftToolInstaller {
 	readonly version: string
 	readonly useCache: boolean
 
-	private constructor(url: string, commit: string, branch: string, version: string, useCache: boolean) {
+	constructor(url: string, commit: string, branch: string, version: string, useCache: boolean) {
 		this.url = url
 		this.commit = commit
 		this.branch = branch
