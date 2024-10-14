@@ -1,13 +1,9 @@
 {
+  "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
-    // https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping
     // Build:
     "incremental": false,
-    "lib": ["es2023"],
-    "module": "node16",
-    "target": "es2022",
     "rootDir": "./src",
-    "esModuleInterop": true,
     "declaration": false,
 
     // Lint:
