@@ -4,10 +4,7 @@ import * as os from 'os'
 import { v5 as _uuid } from 'uuid'
 
 export async function exec(commandLine: string, args: string[]): Promise<string> {
-	const { exitCode, stdout } = await getExecOutput(commandLine, args)
-	if (exitCode != 0) {
-		throw Error(`Command ${[commandLine, ...args]} exit code: ${exitCode}`)
-	}
+	const { stdout } = await getExecOutput(commandLine, args)
 	return stdout.trim()
 }
 
