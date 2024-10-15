@@ -1,10 +1,9 @@
 name: "PR checks"
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
+  push:
+    branches: master
 
 jobs:
   npm-pr-checks:
