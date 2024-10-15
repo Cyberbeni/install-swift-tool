@@ -57,6 +57,20 @@ export class SwiftToolInstaller {
 		}
 	}
 
+	async getCommitHash(): Promise<string> {
+		if (this.commit) {
+			if (this.commit.length != 40) {
+				throw Error('`commit` should be 40 characters if specified.')
+			}
+			return this.commit
+		} else if (this.branch) {
+			return (await exec('git', ['ls-remote', '-ht', this.url, `refs/heads/${this.branch}`, `refs/tags/${this.branch}`]))
+				.substring(0, 40)
+		} else {
+			return this.parsePackageResolved()
+		}
+	}
+
 	uuid = ''
 	cacheKey = ''
 	workingDirectory = ''
@@ -71,16 +85,7 @@ export class SwiftToolInstaller {
 	}
 	async createWorkingDirectory(): Promise<void> {
 		await core.group('Creating working directory', async () => {
-			if (this.commit) {
-				if (this.commit.length != 40) {
-					throw Error('`commit` should be 40 characters if specified.')
-				}
-			} else if (this.branch) {
-				this.commit = (await exec('git', ['ls-remote', '-ht', this.url, `refs/heads/${this.branch}`, `refs/tags/${this.branch}`]))
-					.substring(0, 40)
-			} else {
-				this.commit = this.parsePackageResolved()
-			}
+			this.commit = await this.getCommitHash()
 			this.updateDirectoryNames(await getUuid(this.url, this.commit))
 			await exec('mkdir', ['-p', this.workingDirectory])
 		})

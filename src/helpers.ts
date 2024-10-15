@@ -9,8 +9,8 @@ export async function exec(commandLine: string, args?: string[]): Promise<string
 		listeners: {
 			stdout: (data: Buffer) => {
 				output += data.toString()
-			}
-		}
+			},
+		},
 	})
 	return output.trim()
 }

@@ -13,6 +13,6 @@ async function main(): Promise<void> {
 	await SwiftToolInstaller.install(url, commit, branch, version, useCache)
 }
 
-main().catch(error => {
+main().catch((error) => {
 	core.setFailed(error.message)
 })
