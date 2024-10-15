@@ -3,7 +3,10 @@ import js from "@eslint/js"
 import ts from "typescript-eslint"
 
 export default ts.config({
-	files: ["src/**/*.ts"],
+	files: [
+		"src/**/*.ts",
+		"__tests__/**/*.ts",
+	],
 	ignores: ["src/vendor/**"],
 	extends: [
 		js.configs.recommended,
@@ -13,7 +16,8 @@ export default ts.config({
 		parser: ts.parser,
 		parserOptions: {
 			sourceType: "script",
-			project: "tsconfig.json"
+			project: true,
+			tsconfigRootDir: "."
 		},
 		globals: {
 			...globals.node
