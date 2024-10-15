@@ -1,18 +1,18 @@
 {
-  "extends": "@tsconfig/node20/tsconfig.json",
-  "compilerOptions": {
-    // Build:
-    "incremental": false,
-    "rootDir": "./src",
-    "declaration": false,
+	"extends": "@tsconfig/node20/tsconfig.json",
+	"compilerOptions": {
+		// Build:
+		"incremental": false,
+		"rootDir": "./src",
+		"declaration": false,
 
-    // Lint:
-    "strict": true,
-    "noImplicitAny": false,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
-  },
-  "exclude": ["node_modules", "__tests__"]
+		// Lint:
+		"strict": true,
+		"noImplicitAny": false,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true
+	},
+	"include": ["src"]
 }
