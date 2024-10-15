@@ -6,7 +6,7 @@ import ts from "typescript-eslint"
 export default ts.config({
 	files: [
 		"src/**/*.ts",
-		"__tests__/**/*.ts",
+		"tests/**/*.ts",
 	],
 	ignores: ["src/vendor/**"],
 	extends: [
