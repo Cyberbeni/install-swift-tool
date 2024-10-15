@@ -1,4 +1,5 @@
 import globals from "globals"
+import stylistic from "@stylistic/eslint-plugin"
 import js from "@eslint/js"
 import ts from "typescript-eslint"
 
@@ -9,6 +10,7 @@ export default ts.config({
 	],
 	ignores: ["src/vendor/**"],
 	extends: [
+		stylistic.configs["recommended-flat"],
 		js.configs.recommended,
 		...ts.configs.recommended,
 	],
@@ -24,10 +26,15 @@ export default ts.config({
 		}
 	},
 	rules: {
-		"max-len": ["warn", { "code": 140 }],
-		"indent": ["warn", "tab"],
-		"quotes": ["warn", "single"],
-		"semi": ["warn", "never"],
+		"@stylistic/max-len": ["warn", { "code": 140 }],
+		"@stylistic/indent": ["warn", "tab"],
+		"@stylistic/no-tabs": "off",
+		"@stylistic/quotes": ["warn", "single"],
+		"@stylistic/semi": ["warn", "never"],
+		"@stylistic/comma-dangle": ["warn", "always-multiline"],
+		"@stylistic/brace-style": ["warn", "1tbs"],
+		"@stylistic/lines-between-class-members": "off",
+
 		"@typescript-eslint/no-floating-promises": ["error", { "ignoreVoid": true }]
 	}
 })
