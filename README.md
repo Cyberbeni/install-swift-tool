@@ -52,11 +52,15 @@ jobs:
 
 ## How to contribute
 
-Install npm: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+Install Node.js: https://nodejs.org/en/download/package-manager
 
-Install yarn then download the dependencies
+Enable corepack (if you get an error, it needs to be run as administrator)
 ```bash
-npm install --global yarn
+corepack enable
+```
+
+Download the dependencies
+```bash
 yarn
 ```
 
