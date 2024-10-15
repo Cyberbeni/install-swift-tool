@@ -54,13 +54,9 @@ jobs:
 
 Install Node.js: https://nodejs.org/en/download/package-manager
 
-Enable corepack (if you get an error, it needs to be run as administrator)
+Install yarn and download the dependencies
 ```bash
-corepack enable
-```
-
-Download the dependencies
-```bash
+npm install --global yarn
 yarn
 ```
 

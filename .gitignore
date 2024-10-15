@@ -1,7 +1,4 @@
 *~
 .DS_Store
 
-# https://github.com/nodejs/corepack/blob/main/.gitignore
-/.yarn/
-/.pnp.*
 node_modules/
