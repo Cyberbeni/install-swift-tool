@@ -18,7 +18,7 @@ jobs:
     - name: Update dependencies
       run: yarn upgrade --latest
     - name: Build
-      run: make
+      run: npm run build
     - name: Detect changes in distributed code
       if: ${{ github.event.inputs.force != 'true' }}
       id: changes
