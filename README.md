@@ -52,17 +52,21 @@ jobs:
 
 ## How to contribute
 
-Install npm and yarn on macOS (Homebrew required)
+Install npm: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
+Install yarn then download the dependencies
 ```bash
-make once-mac
+npm install --global yarn
+yarn
 ```
 
-Run before commit
+Run before commit (fix any issues manually that formatting can't automatically fix)
 ```bash
-make
+npm run format
+npm run build
 ```
 
-Run tests in `./__test__/` (for testing parts of the logic, the real tests are run on GitHub after push/pull request)
+Run unit tests in `./tests` (the e2e tests are run on GitHub after push/pull request)
 ```bash
-make test
+npm run test
 ```
