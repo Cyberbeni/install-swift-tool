@@ -1,21 +1,14 @@
 import * as core from '@actions/core'
-import { exec as _exec } from '@actions/exec'
+import { getExecOutput } from '@actions/exec'
 import * as os from 'os'
 import { v5 as _uuid } from 'uuid'
 
 export async function exec(commandLine: string, args: string[]): Promise<string> {
-	let output = ''
-	const exitCode = await _exec(commandLine, args, {
-		listeners: {
-			stdout: (data: Buffer) => {
-				output += data.toString()
-			},
-		},
-	})
+	const { exitCode, stdout } = await getExecOutput(commandLine, args)
 	if (exitCode != 0) {
 		throw Error(`Command ${[commandLine, ...args]} exit code: ${exitCode}`)
 	}
-	return output.trim()
+	return stdout.trim()
 }
 
 export async function getUuid(url: string, commitHash: string): Promise<string> {
