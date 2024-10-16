@@ -12,7 +12,7 @@ export default ts.config({
 	extends: [
 		stylistic.configs["recommended-flat"],
 		js.configs.recommended,
-		...ts.configs.recommended,
+		...ts.configs.recommendedTypeChecked,
 	],
 	languageOptions: {
 		parser: ts.parser,
@@ -35,6 +35,7 @@ export default ts.config({
 		"@stylistic/brace-style": ["warn", "1tbs"],
 		"@stylistic/lines-between-class-members": "off",
 
-		"@typescript-eslint/no-floating-promises": ["error", { "ignoreVoid": true }]
+		"@typescript-eslint/no-floating-promises": ["error", { "ignoreVoid": true }],
+		"@typescript-eslint/require-await": "off",
 	}
 })

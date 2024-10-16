@@ -20,10 +20,18 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
 	return _uuid(`${url}-${commitHash}-${additionalInfo}`, '6050636b-7499-41d4-b9c6-756aff9856d0')
 }
 
-export function logError(error: unknown): void {
+export function errorMessage(error: unknown): string {
 	if (error instanceof Error) {
-		core.info(error.message)
+		return error.message
+	} else if (error instanceof String) {
+		return error.valueOf()
+	} else if (typeof error === 'string') {
+		return error
 	} else {
-		core.info(`Unexpected error type: '${typeof error}'`)
+		return `Unexpected error type: '${typeof error}'`
 	}
+}
+
+export function logError(error: unknown): void {
+	core.info(errorMessage(error))
 }

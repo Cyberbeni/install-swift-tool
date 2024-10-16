@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import { SwiftToolInstaller } from './installer'
+import { errorMessage } from './helpers'
 
 async function main(): Promise<void> {
 	// Inputs
@@ -14,5 +15,5 @@ async function main(): Promise<void> {
 }
 
 main().catch((error) => {
-	core.setFailed(error.message)
+	core.setFailed(errorMessage(error))
 })
