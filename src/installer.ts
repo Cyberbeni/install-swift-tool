@@ -81,7 +81,7 @@ export class SwiftToolInstaller {
 			this.cacheKey = `installswifttool-${uuid}`
 			this.workingDirectory = `${os.homedir()}/install-swift-tool-${uuid}`
 			await exec('mkdir', ['-p', this.workingDirectory])
-			this.productDirectory = await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release', '--show-bin-dir'])
+			this.productDirectory = await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release', '--show-bin-path'])
 		})
 	}
 
