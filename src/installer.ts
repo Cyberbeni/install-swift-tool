@@ -71,30 +71,24 @@ export class SwiftToolInstaller {
 		}
 	}
 
-	uuid = ''
 	cacheKey = ''
 	workingDirectory = ''
 	productDirectory = ''
-	cacheDirectory = ''
-	updateDirectoryNames(newUuid: string): void {
-		this.uuid = newUuid
-		this.cacheKey = `installswifttool-${this.uuid}`
-		this.workingDirectory = `${os.homedir()}/install-swift-tool-${this.uuid}`
-		this.productDirectory = `${this.workingDirectory}/.build/release`
-		this.cacheDirectory = `${this.workingDirectory}/.build/*/release`
-	}
 	async createWorkingDirectory(): Promise<void> {
 		await core.group('Creating working directory', async () => {
 			this.commit = await this.getCommitHash()
-			this.updateDirectoryNames(await getUuid(this.url, this.commit))
+			const uuid = await getUuid(this.url, this.commit)
+			this.cacheKey = `installswifttool-${uuid}`
+			this.workingDirectory = `${os.homedir()}/install-swift-tool-${uuid}`
 			await exec('mkdir', ['-p', this.workingDirectory])
+			this.productDirectory = await exec('swift', ['build', '--package-path', this.workingDirectory, '--configuration', 'release', '--show-bin-dir'])
 		})
 	}
 
 	didRestore = false
 	async tryToRestore(): Promise<void> {
 		await core.group('Trying to restore from cache', async () => {
-			this.didRestore = (await cache.restoreCache([this.cacheDirectory, this.productDirectory], this.cacheKey)) !== undefined
+			this.didRestore = (await cache.restoreCache([this.productDirectory], this.cacheKey)) !== undefined
 		})
 	}
 
@@ -146,7 +140,7 @@ export class SwiftToolInstaller {
 	async tryToCache(): Promise<void> {
 		await core.group('Trying to save to cache', async () => {
 			try {
-				await cache.saveCache([this.cacheDirectory, this.productDirectory], this.cacheKey)
+				await cache.saveCache([this.productDirectory], this.cacheKey)
 			} catch (error) {
 				logError(error)
 			}
