@@ -22,6 +22,7 @@ jobs:
         version: '*'
     - name: Test tool in path
       run: |
+        touch .swift-format
         echo "class Test {}" > ./test.swift
         swift-format lint ./test.swift
 
