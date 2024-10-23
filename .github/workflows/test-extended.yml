@@ -22,9 +22,9 @@ jobs:
         version: '*'
     - name: Test tool in path
       run: |
-        touch .swift-format
+        echo '{"version":1}' > ./.swift-format
         echo "class Test {}" > ./test.swift
-        swift-format lint ./test.swift
+        swift-format ./test.swift
 
   sourcery:
     runs-on: macos-latest
