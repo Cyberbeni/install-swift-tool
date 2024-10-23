@@ -12,18 +12,17 @@ on:
 jobs:
   swift-format:
     runs-on: ubuntu-latest
-    container:
-      image: swift:5.8
     steps:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Run action with version
       uses: ./
       with:
-        url: https://github.com/apple/swift-format
-        version: '^508.0.1'
+        url: https://github.com/swiftlang/swift-format
+        version: '*'
     - name: Test tool in path
       run: |
+        echo '{"version":1}' > ./.swift-format
         echo "class Test {}" > ./test.swift
         swift-format ./test.swift
 
