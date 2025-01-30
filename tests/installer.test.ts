@@ -14,7 +14,9 @@ describe('Version resolving', () => {
 		'~2.4.0',
 		'2.x',
 	])('%s', async (version) => {
-		const installer = new SwiftToolInstaller('https://github.com/Cyberbeni/install-swift-tool', '', '', version, false, 'tests/Package.resolved')
+		const installer = new SwiftToolInstaller(
+			'https://github.com/Cyberbeni/install-swift-tool', '', '', version, false, 'tests/Package.resolved',
+		)
 		await installer.resolveVersion()
 		expect(installer.branch).toBe('v2.4.1')
 	})
@@ -37,7 +39,9 @@ describe('Branch/tag resolving', () => {
 		'v2', // branch
 		'v2.4.1', // tag
 	])('%s', async (branch) => {
-		const installer = new SwiftToolInstaller('https://github.com/Cyberbeni/install-swift-tool', '', branch, '', false, 'tests/Package.resolved')
+		const installer = new SwiftToolInstaller(
+			'https://github.com/Cyberbeni/install-swift-tool', '', branch, '', false, 'tests/Package.resolved',
+		)
 		const hash = await installer.getCommitHash()
 		expect(hash).toBe('7c869f37ca4184c71b60034c7d81e33e1e35d051')
 	})
