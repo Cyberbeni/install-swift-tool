@@ -9,9 +9,11 @@ async function main(): Promise<void> {
 	const branch: string = core.getInput('branch')
 	const version: string = core.getInput('version')
 	const useCache: boolean = core.getInput('use-cache') == 'true'
+	const packageResolvedPath: string = core.getInput('package-resolved-path')
 
 	// Run
-	await SwiftToolInstaller.install(url, commit, branch, version, useCache)
+	const installer = new SwiftToolInstaller(url, commit, branch, version, useCache, packageResolvedPath)
+	await installer.install()
 }
 
 main().catch((error) => {

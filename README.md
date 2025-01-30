@@ -24,6 +24,7 @@ Step example:
     commit: '175df295d77b5bf255b0c160d380cabbe826ded4' # optional, commit hash
     branch: develop # optional, branch or tag, overridden by commit/version
     version: '*' # optional, overridden by commit, format: https://devhints.io/semver
+    package-resolved-path: 'Package.resolved' # optional, default: 'Package.resolved', Package.resolved file path to use for resolving the version if no commit/branch/version is specified
     use-cache: true # optinal, default: true
 ```
 

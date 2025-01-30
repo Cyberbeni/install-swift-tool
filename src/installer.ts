@@ -15,13 +15,15 @@ export class SwiftToolInstaller {
 	branch: string
 	readonly version: string
 	readonly useCache: boolean
+	readonly packageResolvedPath: string
 
-	constructor(url: string, commit: string, branch: string, version: string, useCache: boolean) {
+	constructor(url: string, commit: string, branch: string, version: string, useCache: boolean, packageResolvedPath: string) {
 		this.url = url
 		this.commit = commit
 		this.branch = branch
 		this.version = version
 		this.useCache = useCache
+		this.packageResolvedPath = packageResolvedPath
 	}
 
 	// Steps
@@ -42,9 +44,8 @@ export class SwiftToolInstaller {
 	}
 
 	parsePackageResolved(): string {
-		const resolvedFile = 'Package.resolved'
-		if (fs.existsSync(resolvedFile)) {
-			const fileContents = fs.readFileSync(resolvedFile, { encoding: 'utf8' })
+		if (fs.existsSync(this.packageResolvedPath)) {
+			const fileContents = fs.readFileSync(this.packageResolvedPath, { encoding: 'utf8' })
 			const parsedContents = new PackageResolved(fileContents)
 			for (const entry of parsedContents.pins) {
 				if (entry.location == this.url) {
@@ -178,10 +179,5 @@ export class SwiftToolInstaller {
 			}
 		}
 		await this.exportPath()
-	}
-
-	static async install(url: string, commit = '', branch = '', version = '', useCache = true): Promise<void> {
-		const installer = new SwiftToolInstaller(url, commit, branch, version, useCache)
-		await installer.install()
 	}
 }

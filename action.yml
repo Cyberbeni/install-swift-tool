@@ -9,7 +9,7 @@ inputs:
     description: 'Git URL of the tool to build'
     required: true
   commit:
-    description: 'Git commit hash to clone, will be read from Package.resolved if no commit/branch/version is specified'
+    description: 'Git commit hash to clone'
     required: false
   branch:
     description: 'Git branch/tag to clone, overridden by commit'
@@ -17,6 +17,10 @@ inputs:
   version:
     description: 'Version range to choose max satisfying version by, overridden by commit/branch, format: https://devhints.io/semver'
     required: false
+  package-resolved-path:
+    description: 'Path for the Package.resolved file to use for resolving the version if no commit/branch/version is specified'
+    required: false
+    default: 'Package.resolved'
   use-cache:
     description: 'Use cache to restore/save build product'
     required: false
