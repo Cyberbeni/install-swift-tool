@@ -44,8 +44,12 @@ export class SwiftToolInstaller {
 	}
 
 	parsePackageResolved(): string {
-		if (fs.existsSync(this.packageResolvedPath)) {
-			const fileContents = fs.readFileSync(this.packageResolvedPath, { encoding: 'utf8' })
+		let packageResolvedPath = this.packageResolvedPath
+		if (!packageResolvedPath.startsWith('./')) {
+			packageResolvedPath = `./${packageResolvedPath}`
+		}
+		if (fs.existsSync(packageResolvedPath)) {
+			const fileContents = fs.readFileSync(packageResolvedPath, { encoding: 'utf8' })
 			const parsedContents = new PackageResolved(fileContents)
 			for (const entry of parsedContents.pins) {
 				if (entry.location == this.url) {
