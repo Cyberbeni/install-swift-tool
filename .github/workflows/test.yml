@@ -20,6 +20,7 @@ jobs:
       uses: ./
       with:
         url: https://github.com/nicklockwood/SwiftFormat
+        package-resolved-path: 'tests/Package.resolved'
     - name: Run action with version
       uses: ./
       with:
