@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import { getExecOutput } from '@actions/exec'
 import * as os from 'os'
+import * as crypto from 'crypto'
 
 export async function exec(commandLine: string, args: string[]): Promise<string> {
 	const { stdout } = await getExecOutput(commandLine, args)
@@ -16,7 +17,9 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
 		const swiftVersion = await exec('swift', ['-version'])
 		additionalInfo = `${osVersion}-${os.arch()}-${swiftVersion}`
 	}
-	return `${url}-${commitHash}-${additionalInfo}`
+	return crypto.createHash('sha1')
+		.update(`${url}-${commitHash}-${additionalInfo}`)
+		.digest('hex')
 }
 
 export function errorMessage(error: unknown): string {
