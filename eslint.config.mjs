@@ -18,8 +18,7 @@ export default ts.config({
 		parser: ts.parser,
 		parserOptions: {
 			sourceType: "script",
-			project: true,
-			tsconfigRootDir: "."
+			project: true
 		},
 		globals: {
 			...globals.node
