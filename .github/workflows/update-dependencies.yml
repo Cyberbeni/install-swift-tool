@@ -15,10 +15,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Update dependencies
-      run: yarn upgrade --latest
-    - name: Build
-      run: npm run build
+    - name: Update dependencies & build
+      run: ./scripts/update-dependencies.sh
     - name: Detect changes in distributed code
       if: ${{ github.event.inputs.force != 'true' }}
       id: changes
