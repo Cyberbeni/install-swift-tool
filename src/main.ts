@@ -1,4 +1,4 @@
-import * as core from '@actions/core'
+const core = require('./node_modules/@actions/core')
 import { SwiftToolInstaller } from './installer'
 import { errorMessage } from './helpers'
 

@@ -1,5 +1,5 @@
-import * as core from '@actions/core'
-import { getExecOutput } from '@actions/exec'
+const core = require('./node_modules/@actions/core')
+const getExecOutput = require('./node_modules/@actions/exec').getExecOutput
 import * as os from 'os'
 import * as crypto from 'crypto'
 

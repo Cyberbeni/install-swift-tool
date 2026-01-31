@@ -1,5 +1,5 @@
-import * as cache from '@actions/cache'
-import * as core from '@actions/core'
+const cache = require('./node_modules/@actions/cache')
+const core = require('./node_modules/@actions/core')
 import * as fs from 'fs'
 import * as os from 'os'
 import * as semver from 'semver'

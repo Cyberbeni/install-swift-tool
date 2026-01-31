@@ -8,7 +8,7 @@ DOCKER_IMAGE="docker.io/node:lts-slim"
 PROCESS="yarn"
 
 do_it() {
-	yarn upgrade
+	yarn upgrade --latest
 	npm run build
 }
 
