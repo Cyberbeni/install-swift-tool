@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
-import { SwiftToolInstaller } from './installer'
-import { errorMessage } from './helpers'
+
+import { SwiftToolInstaller } from './installer.js'
+import { errorMessage } from './helpers.js'
 
 async function main(): Promise<void> {
 	// Inputs

@@ -2,64 +2,56 @@
 # yarn lockfile v1
 
 
-"@actions/cache@^5.0.0":
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/@actions/cache/-/cache-5.0.5.tgz#e2489403fc9d8a346f0a2827fbf13574fe23e935"
-  integrity sha512-jiQSg0gfd+C2KPgcmdCOq7dCuCIQQWQ4b1YfGIRaaA9w7PJbRwTOcCz4LiFEUnqZGf0ha/8OKL3BeNwetHzYsQ==
+"@actions/cache@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@actions/cache/-/cache-6.0.0.tgz#363f40d7f9136ac87c3c0e22f9217a4deec14589"
+  integrity sha512-+tCs634SyGBQJ3KU1rtAVabmN/gYiT9WgzTSJzWwdPCLmM3zWrdbysaErKv8HyI6OozClrxNvDgPjJimbHZZvw==
   dependencies:
-    "@actions/core" "^2.0.0"
-    "@actions/exec" "^2.0.0"
-    "@actions/glob" "^0.5.1"
-    "@actions/http-client" "^3.0.2"
-    "@actions/io" "^2.0.0"
-    "@azure/abort-controller" "^1.1.0"
+    "@actions/core" "^3.0.0"
+    "@actions/exec" "^3.0.0"
+    "@actions/glob" "^0.6.1"
+    "@actions/http-client" "^4.0.0"
+    "@actions/io" "^3.0.0"
     "@azure/core-rest-pipeline" "^1.22.0"
-    "@azure/storage-blob" "^12.29.1"
+    "@azure/storage-blob" "^12.30.0"
     "@protobuf-ts/runtime-rpc" "^2.11.1"
-    semver "^6.3.1"
+    semver "^7.7.3"
 
-"@actions/core@^2.0.0", "@actions/core@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@actions/core/-/core-2.0.3.tgz#b05e8cf407ab393e5d10282357a74e1ee2315eee"
-  integrity sha512-Od9Thc3T1mQJYddvVPM4QGiLUewdh+3txmDYHHxoNdkqysR1MbCT+rFOtNUxYAz+7+6RIsqipVahY2GJqGPyxA==
+"@actions/core@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@actions/core/-/core-3.0.0.tgz#89cb07c119e9b46a649ad5f355e77de9b3108cf8"
+  integrity sha512-zYt6cz+ivnTmiT/ksRVriMBOiuoUpDCJJlZ5KPl2/FRdvwU3f7MPh9qftvbkXJThragzUZieit2nyHUyw53Seg==
   dependencies:
-    "@actions/exec" "^2.0.0"
-    "@actions/http-client" "^3.0.2"
+    "@actions/exec" "^3.0.0"
+    "@actions/http-client" "^4.0.0"
 
-"@actions/exec@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@actions/exec/-/exec-2.0.0.tgz#35e829723389f80e362ec2cc415697ec74362ad8"
-  integrity sha512-k8ngrX2voJ/RIN6r9xB82NVqKpnMRtxDoiO+g3olkIUpQNqjArXrCQceduQZCQj3P3xm32pChRLqRrtXTlqhIw==
+"@actions/exec@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@actions/exec/-/exec-3.0.0.tgz#8c3464d20f0aa4068707757021d7e3c01a7ee203"
+  integrity sha512-6xH/puSoNBXb72VPlZVm7vQ+svQpFyA96qdDBvhB8eNZOE8LtPf9L4oAsfzK/crCL8YZ+19fKYVnM63Sl+Xzlw==
   dependencies:
-    "@actions/io" "^2.0.0"
+    "@actions/io" "^3.0.2"
 
-"@actions/glob@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@actions/glob/-/glob-0.5.1.tgz#606d8aa6b9bd5205e50e79c3da33709d65307cb6"
-  integrity sha512-+dv/t2aKQdKp9WWSp+1yIXVJzH5Q38M0Mta26pzIbeec14EcIleMB7UU6N7sNgbEuYfyuVGpE5pOKjl6j1WXkA==
+"@actions/glob@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@actions/glob/-/glob-0.6.1.tgz#4820bfd86175dd98cd63d3d557e47bb09a21c7d0"
+  integrity sha512-K4+2Ac5ILcf2ySdJCha+Pop9NcKjxqCL4xL4zI50dgB2PbXgC0+AcP011xfH4Of6b4QEJJg8dyZYv7zl4byTsw==
   dependencies:
-    "@actions/core" "^2.0.3"
+    "@actions/core" "^3.0.0"
     minimatch "^3.0.4"
 
-"@actions/http-client@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@actions/http-client/-/http-client-3.0.2.tgz#3db9c83af9d29d51ac8c30b45bc17f7014beb1b2"
-  integrity sha512-JP38FYYpyqvUsz+Igqlc/JG6YO9PaKuvqjM3iGvaLqFnJ7TFmcLyy2IDrY0bI0qCQug8E9K+elv5ZNfw62ZJzA==
+"@actions/http-client@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@actions/http-client/-/http-client-4.0.0.tgz#f9754133c22802466482bf96321d42f2dba1fc82"
+  integrity sha512-QuwPsgVMsD6qaPD57GLZi9sqzAZCtiJT8kVBCDpLtxhL5MydQ4gS+DrejtZZPdIYyB1e95uCK9Luyds7ybHI3g==
   dependencies:
     tunnel "^0.0.6"
     undici "^6.23.0"
 
-"@actions/io@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@actions/io/-/io-2.0.0.tgz#3ad1271ba3cd515324f2215e8d4c1c0c3864d65b"
-  integrity sha512-Jv33IN09XLO+0HS79aaODsvIRyduiF7NY/F6LYeK5oeUmrsz7aFdRphQjFoESF4jS7lMauDOttKALcpapVDIAg==
-
-"@azure/abort-controller@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@azure/abort-controller/-/abort-controller-1.1.0.tgz#788ee78457a55af8a1ad342acb182383d2119249"
-  integrity sha512-TrRLIoSQVzfAJX9H1JeFjzAoDGcoK1IYX1UImfceTZpsyYfWr09Ss1aHW1y5TrrR3iq6RZLBwJ3E24uwPhwahw==
-  dependencies:
-    tslib "^2.2.0"
+"@actions/io@^3.0.0", "@actions/io@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@actions/io/-/io-3.0.2.tgz#6f89b27a159d109836d983efa283997c23b92284"
+  integrity sha512-nRBchcMM+QK1pdjO7/idu86rbJI5YHUKCvKs0KxnSYbVe3F51UfGxuZX4Qy/fWlp6l7gWFwIkrOzN+oUK03kfw==
 
 "@azure/abort-controller@^2.0.0", "@azure/abort-controller@^2.1.2":
   version "2.1.2"
@@ -161,7 +153,7 @@
     "@typespec/ts-http-runtime" "^0.3.0"
     tslib "^2.6.2"
 
-"@azure/storage-blob@^12.29.1":
+"@azure/storage-blob@^12.30.0":
   version "12.30.0"
   resolved "https://registry.yarnpkg.com/@azure/storage-blob/-/storage-blob-12.30.0.tgz#e7abd8ddca42f93a2b0cedb5303fead323c8d80d"
   integrity sha512-peDCR8blSqhsAKDbpSP/o55S4sheNwSrblvCaHUZ5xUI73XA7ieUGGwrONgD/Fng0EoDe1VOa3fAQ7+WGB3Ocg==
@@ -547,17 +539,10 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
-"@types/node@*":
+"@types/node@*", "@types/node@^25.1.0":
   version "25.1.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-25.1.0.tgz#95cc584f1f478301efc86de4f1867e5875e83571"
   integrity sha512-t7frlewr6+cbx+9Ohpl0NOTKXZNV9xHRmNOvql47BFJKcEG1CxtxlPEEe+gR9uhVWM4DwhnvTF110mIL4yP9RA==
-  dependencies:
-    undici-types "~7.16.0"
-
-"@types/node@^24.10.1":
-  version "24.10.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.10.9.tgz#1aeb5142e4a92957489cac12b07f9c7fe26057d0"
-  integrity sha512-ne4A0IpG3+2ETuREInjPNhUGis1SFjv1d5asp8MzEAGtOZeTeHVDOYqOgqfhvseqg/iXty2hjBf1zAOb7RNiNw==
   dependencies:
     undici-types "~7.16.0"
 
@@ -1364,11 +1349,6 @@ resolve-pkg-maps@^1.0.0:
   resolved "https://registry.yarnpkg.com/resolve-pkg-maps/-/resolve-pkg-maps-1.0.0.tgz#616b3dc2c57056b5588c31cdf4b3d64db133720f"
   integrity sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==
 
-semver@^6.3.1:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
-  integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
-
 semver@^7.7.3:
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.3.tgz#4b5f4143d007633a8dc671cd0a6ef9147b8bb946"
@@ -1435,7 +1415,7 @@ ts-api-utils@^2.4.0:
   resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-2.4.0.tgz#2690579f96d2790253bdcf1ca35d569ad78f9ad8"
   integrity sha512-3TaVTaAv2gTiMB35i3FiGJaRfwb3Pyn/j3m/bfAvGe8FB7CF6u+LMYqYlDh7reQf7UNvoTvdfAqHGmPGOSsPmA==
 
-tslib@^2.2.0, tslib@^2.6.2, tslib@^2.8.1:
+tslib@^2.6.2, tslib@^2.8.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==
