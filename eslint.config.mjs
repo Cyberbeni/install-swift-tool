@@ -10,7 +10,7 @@ export default ts.config({
 	],
 	ignores: ["src/vendor/**"],
 	extends: [
-		stylistic.configs["recommended-flat"],
+		stylistic.configs["recommended"],
 		js.configs.recommended,
 		...ts.configs.recommendedTypeChecked,
 	],
