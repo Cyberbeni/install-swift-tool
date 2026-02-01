@@ -1,7 +1,7 @@
 import { describe, test } from 'node:test'
 import assert from 'node:assert/strict'
 
-import { SwiftToolInstaller } from '../src/installer.js'
+import { SwiftToolInstaller } from '../src/installer.ts'
 
 describe('Version resolving', () => {
 	const testCases = [

@@ -5,6 +5,7 @@
 		"incremental": false,
 		"rootDir": "./src",
 		"declaration": false,
+		"rewriteRelativeImportExtensions": true,
 
 		// Lint:
 		"strict": true,

@@ -1,7 +1,7 @@
 import { describe, test } from 'node:test'
 import assert from 'node:assert/strict'
 
-import * as h from '../src/helpers.js'
+import * as h from '../src/helpers.ts'
 
 describe('exec', () => {
 	test('throw error when the command doesn\'t exist', async () => {

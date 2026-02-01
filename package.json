@@ -9,7 +9,7 @@
 		"format": "eslint --max-warnings=0 --fix .",
 		"lint": "eslint .",
 		"build": "ncc build --minify --out dist src/main.ts",
-		"test": "node --import tsx --test tests/**/*.test.ts"
+		"test": "node --experimental-transform-types --test tests/**/*.test.ts"
 	},
 	"keywords": [],
 	"author": "Cyberbeni",
@@ -30,7 +30,6 @@
 		"@types/semver": "^7.7.1",
 		"@vercel/ncc": "^0.38.4",
 		"eslint": "^9.39.1",
-		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.47.0"
 	}
