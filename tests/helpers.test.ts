@@ -1,13 +1,16 @@
-import * as h from '../src/helpers'
+import { describe, test } from 'node:test'
+import assert from 'node:assert/strict'
+
+import * as h from '../src/helpers.js'
 
 describe('exec', () => {
 	test('throw error when the command doesn\'t exist', async () => {
-		await expect(h.exec('this-command-doesnt-exist', [])).rejects.toThrow()
+		await assert.rejects(h.exec('this-command-doesnt-exist', []))
 	})
 	test('throw error when non-zero exit code', async () => {
-		await expect(h.exec('git', ['this-subcommand-doesnt-exist'])).rejects.toThrow()
+		await assert.rejects(h.exec('git', ['this-subcommand-doesnt-exist']))
 	})
 	test('return output when zero exit code', async () => {
-		expect(await h.exec('git', ['--version'])).toMatch(/^git version /)
+		assert.match(await h.exec('git', ['--version']), /^git version /)
 	})
 })

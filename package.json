@@ -9,28 +9,28 @@
 		"format": "eslint --max-warnings=0 --fix .",
 		"lint": "eslint .",
 		"build": "ncc build --minify --out dist src/main.ts",
-		"test": "jest"
+		"test": "node --import tsx --test tests/**/*.test.ts"
 	},
 	"keywords": [],
 	"author": "Cyberbeni",
 	"license": "MIT",
+	"type": "module",
 	"dependencies": {
-		"@actions/cache": "^5.0.0",
-		"@actions/core": "^2.0.0",
-		"@actions/exec": "^2.0.0",
+		"@actions/cache": "^6.0.0",
+		"@actions/core": "^3.0.0",
+		"@actions/exec": "^3.0.0",
 		"semver": "^7.7.3"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.39.1",
 		"@stylistic/eslint-plugin": "^5.6.1",
-		"@tsconfig/node20": "^20.1.8",
+		"@tsconfig/node24": "^24.0.4",
 		"@types/jest": "^30.0.0",
-		"@types/node": "^24.10.1",
+		"@types/node": "^25.1.0",
 		"@types/semver": "^7.7.1",
 		"@vercel/ncc": "^0.38.4",
 		"eslint": "^9.39.1",
-		"jest": "^30.2.0",
-		"ts-jest": "^29.4.5",
+		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.47.0"
 	}

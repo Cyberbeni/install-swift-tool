@@ -34,7 +34,19 @@ export default ts.config({
 		"@stylistic/brace-style": ["warn", "1tbs"],
 		"@stylistic/lines-between-class-members": "off",
 
-		"@typescript-eslint/no-floating-promises": ["error", { "ignoreVoid": true }],
+		"@typescript-eslint/no-floating-promises": ["error", {
+			"ignoreVoid": true,
+			"allowForKnownSafeCalls": [
+				{
+					"from": "package",
+					"name": [
+						"describe",
+						"test"
+					],
+					"package": "node:test"
+				}
+			]
+		}],
 		"@typescript-eslint/require-await": "off",
 	}
 })

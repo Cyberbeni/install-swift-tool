@@ -4,8 +4,8 @@ import * as fs from 'fs'
 import * as os from 'os'
 import * as semver from 'semver'
 
-import { exec, getUuid, logError } from './helpers'
-import { PackageResolved } from './vendor/SwiftPackage'
+import { exec, getUuid, logError } from './helpers.js'
+import { PackageResolved } from './vendor/SwiftPackage.js'
 
 export class SwiftToolInstaller {
 	// Input
