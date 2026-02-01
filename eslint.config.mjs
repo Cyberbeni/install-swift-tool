@@ -1,9 +1,10 @@
+import { defineConfig } from 'eslint/config'
 import globals from "globals"
 import stylistic from "@stylistic/eslint-plugin"
 import js from "@eslint/js"
 import ts from "typescript-eslint"
 
-export default ts.config({
+export default defineConfig({
 	files: [
 		"src/**/*.ts",
 		"tests/**/*.ts",
