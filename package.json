@@ -19,17 +19,17 @@
 		"@actions/cache": "^6.0.0",
 		"@actions/core": "^3.0.0",
 		"@actions/exec": "^3.0.0",
-		"semver": "^7.7.3"
+		"semver": "^7.7.4"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.39.1",
-		"@stylistic/eslint-plugin": "^5.6.1",
+		"@eslint/js": "^10.0.1",
+		"@stylistic/eslint-plugin": "^5.9.0",
 		"@tsconfig/node24": "^24.0.4",
-		"@types/node": "^25.1.0",
+		"@types/node": "^25.3.0",
 		"@types/semver": "^7.7.1",
 		"@vercel/ncc": "^0.38.4",
-		"eslint": "^9.39.1",
+		"eslint": "^10.0.1",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.47.0"
+		"typescript-eslint": "^8.56.0"
 	}
 }
