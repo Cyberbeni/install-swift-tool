@@ -6,8 +6,6 @@ on:
       force:
         description: 'Also create pull request if only developer dependencies changed'
         default: 'false'
-  schedule:
-    - cron: '37 4 1 * *'
 
 jobs:
   update:
