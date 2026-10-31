@@ -19,7 +19,7 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
 	}
 	return crypto.createHash('sha256')
 		.update(`${url}-${commitHash}-${additionalInfo}`)
-		.digest('base64url')
+		.digest('hex')
 }
 
 export function errorMessage(error: unknown): string {
