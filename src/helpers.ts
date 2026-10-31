@@ -17,9 +17,9 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
 		const swiftVersion = await exec('swift', ['-version'])
 		additionalInfo = `${osVersion}-${os.arch()}-${swiftVersion}`
 	}
-	return crypto.createHash('sha1')
+	return crypto.createHash('sha256')
 		.update(`${url}-${commitHash}-${additionalInfo}`)
-		.digest('hex')
+		.digest('base64url')
 }
 
 export function errorMessage(error: unknown): string {
