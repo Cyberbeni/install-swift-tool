@@ -18,6 +18,7 @@ export async function getUuid(url: string, commitHash: string): Promise<string> 
 		additionalInfo = `${osVersion}-${os.arch()}-${swiftVersion}`
 	}
 	return crypto.createHash('sha256')
+		.update(`1794143622`) // Unix timestamp of last breaking change
 		.update(`${url}-${commitHash}-${additionalInfo}`)
 		.digest('hex')
 }
