@@ -60,13 +60,10 @@ export class SwiftToolInstaller {
 
 	async getCommitHash(): Promise<string> {
 		if (this.commit) {
-			if (this.commit.length != 40) {
-				throw Error('`commit` should be 40 characters if specified.')
-			}
 			return this.commit
 		} else if (this.branch) {
 			return (await exec('git', ['ls-remote', '-ht', this.url, `refs/heads/${this.branch}`, `refs/tags/${this.branch}`]))
-				.substring(0, 40)
+				.split(/\s+/)[0]
 		} else {
 			return this.parsePackageResolved()
 		}
